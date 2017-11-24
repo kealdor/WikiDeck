@@ -75,6 +75,9 @@ namespace WikiDeck
 
         private void buttonUpload_Click(object sender, EventArgs e)
         {
+            // TODO: remove this guard once UpdateUI implemented
+            if (_deck == null)
+                return;
             _deck.Cards = richTextBoxDeck.Text;
             _deck.Upload();
             MessageBox.Show("Nothing Uploaded. Uploading is not yet implemented.");
