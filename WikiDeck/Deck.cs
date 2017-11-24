@@ -23,16 +23,14 @@ namespace WikiDeck
             _name = name;
         }
 
-        public void Load()
+        public async Task LoadAsync()
         {
             using (WebClient client = new WebClient())
             {
-                _content = client.DownloadString(_site + "index.php?action=raw&title=Decks/" + _name);
+                _content = await client.DownloadStringTaskAsync(_site + "index.php?action=raw&title=Decks/" + _name);
                 Match match = Regex.Match(_content, @"{{Deck.*\|Deck=([^}]+)}}", RegexOptions.Singleline);
                 if (match.Success)
-                {
                     Cards = match.Groups[1].Value.Trim();
-                }
             }
         }
 

@@ -69,5 +69,7 @@ namespace WikiDeck
         public string Watermark { get; set; }
 
         public string LowerCaseName { get; private set; }
+
+        public bool IsLand => Types.Contains("Land");
     }
 }

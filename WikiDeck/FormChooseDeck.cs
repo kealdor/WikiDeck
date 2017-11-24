@@ -38,8 +38,24 @@ namespace WikiDeck
         private async void buttonRefresh_Click(object sender, EventArgs e)
         {
             listBoxDecks.DataSource = null;
+            UpdateUI(true);
             await _decks.LoadAsync("http://magicduels.wikia.com/");
             listBoxDecks.DataSource = _decks;
+            UpdateUI(false);
         }
+
+        private void UpdateUI(bool loading)
+        {
+            buttonOk.Enabled = !loading;
+            if (loading)
+            {
+                listBoxDecks.MouseDoubleClick -= listBoxDecks_MouseDoubleClick;
+            }
+            else
+            {
+                listBoxDecks.MouseDoubleClick += listBoxDecks_MouseDoubleClick;
+            }
+        }
+
     }
 }

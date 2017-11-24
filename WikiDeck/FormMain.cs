@@ -29,13 +29,13 @@ namespace WikiDeck
             ValidateDeck();
         }
 
-        private void buttonLoad_Click(object sender, EventArgs e)
+        private async void buttonLoad_Click(object sender, EventArgs e)
         {
             FormChooseDeck dlg = new FormChooseDeck(_decks);
             if (dlg.ShowDialog(this) == DialogResult.OK)
             {
                 Deck deck = new Deck("http://magicduels.wikia.com/", dlg.ChosenDeck);
-                deck.Load();
+                await deck.LoadAsync();
                 _deck = deck;
                 richTextBoxDeck.Text = deck.Cards;
                 textBoxDeckName.Text = dlg.ChosenDeck;
@@ -48,9 +48,10 @@ namespace WikiDeck
             char[] sep = { '\n' };
             string[] cardLines = richTextBoxDeck.Text.Split(sep, StringSplitOptions.RemoveEmptyEntries);
             richTextBoxDeck.Text = "";
+            Regex cardEntry = new Regex(@"^(\d+)\s+(.+)$");
             foreach (string line in cardLines)
             {
-                Match match = Regex.Match(line, @"^(\d+)\s+(.+)$");
+                Match match = cardEntry.Match(line);
                 if (!match.Success)
                 {
                     richTextBoxDeck.AppendText(line, Color.Red);
