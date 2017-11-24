@@ -35,11 +35,10 @@ namespace WikiDeck
             Close();
         }
 
-        private void buttonRefresh_Click(object sender, EventArgs e)
+        private async void buttonRefresh_Click(object sender, EventArgs e)
         {
             listBoxDecks.DataSource = null;
-            Application.DoEvents();
-            _decks.Load("http://magicduels.wikia.com/");
+            await _decks.LoadAsync("http://magicduels.wikia.com/");
             listBoxDecks.DataSource = _decks;
         }
     }

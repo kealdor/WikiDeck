@@ -17,7 +17,7 @@ namespace WikiDeck
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Decks decks = new Decks();
-            decks.Load("http://magicduels.wikia.com/");
+            decks.LoadAsync("http://magicduels.wikia.com/").GetAwaiter().GetResult();
             Application.Run(new FormMain(decks));
         }
     }

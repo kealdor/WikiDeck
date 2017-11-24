@@ -10,7 +10,7 @@ namespace WikiDeck
 {
     public class Decks : List<string>
     {
-        public void Load(string site)
+        public async Task LoadAsync(string site)
         {
             Clear();
 
@@ -25,7 +25,7 @@ namespace WikiDeck
                     string command = baseCommand;
                     if (!string.IsNullOrEmpty(apfrom))
                         command += "&apfrom=" + apfrom;
-                    string contents = client.DownloadString(command);
+                    string contents = await client.DownloadStringTaskAsync(command);
                     doc.LoadXml(contents);
                     XmlNodeList deckNodes = doc.SelectNodes("/api/query/allpages/p");
                     foreach (XmlNode deckNode in deckNodes)
@@ -36,7 +36,6 @@ namespace WikiDeck
                     }
                     XmlNode continueNode = doc.SelectSingleNode("/api/query-continue/allpages");
                     apfrom = continueNode == null ? "" : continueNode.Attributes.GetNamedItem("apfrom").Value;
-
                 } while (!string.IsNullOrEmpty(apfrom));
             }
         }
