@@ -117,6 +117,8 @@
             this.Controls.Add(this.richTextBoxDeck);
             this.Name = "FormMain";
             this.Text = "Wiki Deck";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
+            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

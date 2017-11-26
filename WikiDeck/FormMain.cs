@@ -8,11 +8,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WikiaClientLibrary;
 
 namespace WikiDeck
 {
     public partial class FormMain : Form
     {
+        private WikiaClient _client;
         private Cards _cards;
         private Decks _decks;
         private Deck _deck;
@@ -97,5 +99,35 @@ namespace WikiDeck
             string cardName = (string)((ListBox)sender).SelectedItem;
             richTextBoxDeck.AppendText("4 " + cardName + "\n");
         }
+
+        private void FormMain_Shown(object sender, EventArgs e)
+        {
+            if (_client == null)
+                Login();
+        }
+
+        private void Login()
+        {
+            FormLogin dlg = new FormLogin();
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                _client = dlg.Client;
+            }
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_client != null)
+            {
+                _client.Dispose();
+                _client = null;
+            }
+        }
     }
 }
+

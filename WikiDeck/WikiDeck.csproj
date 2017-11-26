@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +55,7 @@
     <Compile Include="Cards.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Decks.cs" />
+    <Compile Include="Encryption.cs" />
     <Compile Include="FormCard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +67,12 @@
     </Compile>
     <Compile Include="FormChooseDeck.Designer.cs">
       <DependentUpon>FormChooseDeck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="RichTextBoxExtensions.cs" />
     <Compile Include="FormMain.cs">
@@ -81,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormChooseDeck.resx">
       <DependentUpon>FormChooseDeck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -110,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WikiaClientLibrary\WikiaClientLibrary.csproj">
+      <Project>{955dfa07-f730-4ab2-992d-3ca920df2a3a}</Project>
+      <Name>WikiaClientLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

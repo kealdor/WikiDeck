@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,32 +26,46 @@ namespace WikiaClientLibrary
 
         public bool Login(string username, string password)
         {
-            NameValueCollection userData = new NameValueCollection();
-            userData.Add("lgname", username);
-            LoginResponse response = AttemptLogin(userData);
-            if (response.Result == ResponseResults.Success)
-                return true;
-            if (response.Result != ResponseResults.NeedToken)
+            try
+            {
+                NameValueCollection userData = new NameValueCollection();
+                userData.Add("lgname", username);
+                LoginResponse response = AttemptLogin(userData);
+                if (response.Result == ResponseResults.Success)
+                    return true;
+                if (response.Result != ResponseResults.NeedToken)
+                    return false;
+                userData.Add("lgpassword", password);
+                userData.Add("lgtoken", response.Token);
+                response = AttemptLogin(userData);
+                return response.Result == ResponseResults.Success;
+            }
+            catch (WebException)
+            {
                 return false;
-            userData.Add("lgpassword", password);
-            userData.Add("lgtoken", response.Token);
-            response = AttemptLogin(userData);
-            return response.Result == ResponseResults.Success;
+            }
         }
 
         public async Task<bool> LoginAsync(string username, string password)
         {
-            NameValueCollection userData = new NameValueCollection();
-            userData.Add("lgname", username);
-            LoginResponse response = await AttemptLoginAsync(userData);
-            if (response.Result == ResponseResults.Success)
-                return true;
-            if (response.Result != ResponseResults.NeedToken)
+            try
+            {
+                NameValueCollection userData = new NameValueCollection();
+                userData.Add("lgname", username);
+                LoginResponse response = await AttemptLoginAsync(userData);
+                if (response.Result == ResponseResults.Success)
+                    return true;
+                if (response.Result != ResponseResults.NeedToken)
+                    return false;
+                userData.Add("lgpassword", password);
+                userData.Add("lgtoken", response.Token);
+                response = await AttemptLoginAsync(userData);
+                return response.Result == ResponseResults.Success;
+            }
+            catch (WebException)
+            {
                 return false;
-            userData.Add("lgpassword", password);
-            userData.Add("lgtoken", response.Token);
-            response = await AttemptLoginAsync(userData);
-            return response.Result == ResponseResults.Success;
+            }
         }
 
         private LoginResponse AttemptLogin(NameValueCollection data)
@@ -67,8 +82,19 @@ namespace WikiaClientLibrary
 
         private LoginResponse ParseLoginRespose(string result)
         {
-            var response = JsonConvert.DeserializeObject<LoginResponseRoot>(result);
-            return response.Login;
+            try
+            {
+                var response = JsonConvert.DeserializeObject<LoginResponseRoot>(result);
+                return response.Login;
+            }
+            catch (JsonReaderException)
+            {
+                return new LoginResponse()
+                {
+                    Result = "BadResponse",
+                    Token = "",
+                };
+            }
         }
 
         public string GetPageContents(string title)
@@ -205,6 +231,7 @@ namespace WikiaClientLibrary
         {
             if (_client != null)
             {
+                _client.CancelAsync();
                 _client.Dispose();
                 _client = null;
             }
