@@ -21,7 +21,11 @@ namespace WikiDeck
         {
             string lowerCaseName = cardName.ToLowerInvariant();
             return _cards.Where(x => x.LowerCaseName == lowerCaseName).FirstOrDefault();
-            //return _cards.Where(x => x.LowerCaseName == lowerCaseName).SingleOrDefault();
+        }
+
+        public List<string> GetAll()
+        {
+            return _cards.Select(x => x.Name).OrderBy(x => x).ToList();
         }
 
         public List<string> GetFuzzyMatches(string match)

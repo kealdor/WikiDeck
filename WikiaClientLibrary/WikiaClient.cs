@@ -170,6 +170,8 @@ namespace WikiaClientLibrary
         {
             if (result.StartsWith("{\"edit\":{\"result\":\"Success\""))
                 return;
+            if (result.StartsWith("{\"edit\":{\"new\":\"\",\"result\":\"Success\""))
+                return;
             int errorStart = result.IndexOf("{\"code\":");
             int errorEnd = result.IndexOf("}", errorStart + 1);
             if (errorStart != -1 && errorEnd != -1)

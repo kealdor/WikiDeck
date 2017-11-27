@@ -8,6 +8,7 @@ namespace WikiDeck
     public partial class FormLogin : Form
     {
         public WikiaClient Client { get; set; }
+        public string UserName { get; internal set; }
 
         public FormLogin()
         {
@@ -31,6 +32,7 @@ namespace WikiDeck
             {
                 SaveDetails();
                 DialogResult = DialogResult.OK;
+                UserName = textBoxUsername.Text;
                 Close();
             }
             else

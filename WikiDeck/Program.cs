@@ -16,7 +16,19 @@ namespace WikiDeck
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain(args.Length == 0 ? "Decks/" : args[0]));
+            string deckPrefix;
+            string deckListsPageName;
+            if (args.Length > 0)
+            {
+                deckPrefix = "TestDecks/";
+                deckListsPageName = "TestDecklists";
+            }
+            else
+            {
+                deckPrefix = "Decks/";
+                deckListsPageName = "Decklists";
+            }
+            Application.Run(new FormMain(deckPrefix, deckListsPageName));
         }
     }
 }

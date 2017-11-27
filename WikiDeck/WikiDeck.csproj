@@ -74,6 +74,12 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormNewDeck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewDeck.Designer.cs">
+      <DependentUpon>FormNewDeck.cs</DependentUpon>
+    </Compile>
     <Compile Include="RichTextBoxExtensions.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewDeck.resx">
+      <DependentUpon>FormNewDeck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

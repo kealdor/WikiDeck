@@ -19,12 +19,16 @@ namespace WikiDeck
         private Decks _decks;
         private Deck _deck;
         private string _deckPrefix;
+        private string _deckListsPageName;
+        private string _userName;
 
-        public FormMain(string deckPrefix)
+        public FormMain(string deckPrefix, string deckListsPageName)
         {
             InitializeComponent();
             _deckPrefix = deckPrefix;
+            _deckListsPageName = deckListsPageName;
             _cards = new Cards();
+            listBoxCardList.DataSource = _cards.GetAll();
         }
 
         private void buttonValidate_Click(object sender, EventArgs e)
@@ -90,7 +94,7 @@ namespace WikiDeck
         {
             string text = ((TextBox)sender).Text;
             if (string.IsNullOrEmpty(text))
-                listBoxCardList.DataSource = null;
+                listBoxCardList.DataSource = _cards.GetAll();
             else
                 listBoxCardList.DataSource = _cards.GetFuzzyMatches(text);
         }
@@ -113,13 +117,10 @@ namespace WikiDeck
             if (dlg.ShowDialog(this) == DialogResult.OK)
             {
                 _client = dlg.Client;
+                _userName = dlg.UserName;
                 _decks = new Decks(_deckPrefix, _client);
             }
             UpdateUI();
-        }
-
-        private void UpdateUI()
-        {
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -130,6 +131,23 @@ namespace WikiDeck
                 _client = null;
             }
         }
+
+        private void buttonNew_Click(object sender, EventArgs e)
+        {
+            FormNewDeck dlg = new FormNewDeck(_client, _deckPrefix);
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                _deck = new Deck(dlg.DeckPage);
+                _deck.SetDefaultContent(dlg.DeckName, _userName);
+                richTextBoxDeck.Text = _deck.Cards;
+                textBoxDeckName.Text = dlg.DeckName;
+            }
+        }
+
+        private void UpdateUI()
+        {
+        }
+
     }
 }
 
