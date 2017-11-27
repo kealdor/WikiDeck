@@ -10,6 +10,7 @@ namespace WikiDeck
         private WikiaPage _deckPage;
 
         public string Cards { get; set; }
+        public string PageTitle => _deckPage.PageTitle;
 
         public Deck(WikiaPage deckPage)
         {

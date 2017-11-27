@@ -37,6 +37,7 @@
             this.listBoxCardList = new System.Windows.Forms.ListBox();
             this.buttonNew = new System.Windows.Forms.Button();
             this.buttonDecklist = new System.Windows.Forms.Button();
+            this.buttonView = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // richTextBoxDeck
@@ -124,11 +125,22 @@
             this.buttonDecklist.Text = "Decklist";
             this.buttonDecklist.UseVisualStyleBackColor = true;
             // 
+            // buttonView
+            // 
+            this.buttonView.Location = new System.Drawing.Point(176, 447);
+            this.buttonView.Name = "buttonView";
+            this.buttonView.Size = new System.Drawing.Size(75, 23);
+            this.buttonView.TabIndex = 9;
+            this.buttonView.Text = "View";
+            this.buttonView.UseVisualStyleBackColor = true;
+            this.buttonView.Click += new System.EventHandler(this.buttonView_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 508);
+            this.Controls.Add(this.buttonView);
             this.Controls.Add(this.buttonDecklist);
             this.Controls.Add(this.buttonNew);
             this.Controls.Add(this.listBoxCardList);
@@ -158,6 +170,7 @@
         private System.Windows.Forms.ListBox listBoxCardList;
         private System.Windows.Forms.Button buttonNew;
         private System.Windows.Forms.Button buttonDecklist;
+        private System.Windows.Forms.Button buttonView;
     }
 }
 

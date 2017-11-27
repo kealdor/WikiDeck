@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -47,6 +48,7 @@ namespace WikiDeck
                 richTextBoxDeck.Text = deck.Cards;
                 textBoxDeckName.Text = dlg.ChosenDeck;
                 ValidateDeck();
+                UpdateUI(false);
             }
         }
 
@@ -82,11 +84,10 @@ namespace WikiDeck
 
         private async void buttonUpload_Click(object sender, EventArgs e)
         {
-            // TODO: remove this guard once UpdateUI implemented
-            if (_deck == null)
-                return;
+            UpdateUI(true);
             _deck.Cards = richTextBoxDeck.Text;
             await _deck.UploadAsync();
+            UpdateUI(false);
             MessageBox.Show("Deck has been uploaded.");
         }
 
@@ -101,6 +102,8 @@ namespace WikiDeck
 
         private void listBoxCardList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (_deck == null)
+                return;
             string cardName = (string)((ListBox)sender).SelectedItem;
             richTextBoxDeck.AppendText("4 " + cardName + "\n");
         }
@@ -120,7 +123,11 @@ namespace WikiDeck
                 _userName = dlg.UserName;
                 _decks = new Decks(_deckPrefix, _client);
             }
-            UpdateUI();
+            else
+            {
+                Close();
+            }
+            UpdateUI(false);
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -142,12 +149,25 @@ namespace WikiDeck
                 richTextBoxDeck.Text = _deck.Cards;
                 textBoxDeckName.Text = dlg.DeckName;
             }
+            UpdateUI(false);
         }
 
-        private void UpdateUI()
+        private void UpdateUI(bool working)
         {
+            buttonValidate.Enabled = _deck != null;
+            buttonNew.Enabled = !working;
+            buttonLoad.Enabled = !working; ;
+            buttonUpload.Enabled = !working && _deck != null;
+            buttonDecklist.Enabled = !working && _deck != null;
+            richTextBoxDeck.Enabled = _deck != null;
+            buttonView.Enabled = _deck != null;
         }
 
+        private void buttonView_Click(object sender, EventArgs e)
+        {
+            string url = _client.Site + "wiki/" + _deck.PageTitle;
+            Process.Start(url);
+        }
     }
 }
 
