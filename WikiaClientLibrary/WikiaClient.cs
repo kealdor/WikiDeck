@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace WikiaClientLibrary
@@ -22,6 +19,11 @@ namespace WikiaClientLibrary
             if (!Site.EndsWith("/"))
                 Site += "/";
             _client = new ExtendedWebClient();
+        }
+
+        public void CancelAsync()
+        {
+            _client.CancelAsync();
         }
 
         public bool Login(string username, string password)
@@ -152,6 +154,18 @@ namespace WikiaClientLibrary
             ThrowIfError(result);
         }
 
+        public string Query(string query)
+        {
+            string url = ApiQuery(query);
+            return _client.DownloadString(url);
+        }
+
+        public async Task<string> QueryAsync(string query)
+        {
+            string url = ApiQuery(query);
+            return await _client.DownloadStringTaskAsync(url);
+        }
+
         private void ThrowIfError(string result)
         {
             if (result.StartsWith("{\"edit\":{\"result\":\"Success\""))
@@ -227,11 +241,16 @@ namespace WikiaClientLibrary
             return Site + "index.php?action=raw" + queryString;
         }
 
+        private string ApiQuery(string query)
+        {
+            return Site + "api.php?action=query" + query;
+        }
+
         public void Dispose()
         {
             if (_client != null)
             {
-                _client.CancelAsync();
+                CancelAsync();
                 _client.Dispose();
                 _client = null;
             }

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -37,9 +31,14 @@ namespace WikiDeck
 
         private async void buttonRefresh_Click(object sender, EventArgs e)
         {
+            await LoadDecks();
+        }
+
+        private async Task LoadDecks()
+        {
             listBoxDecks.DataSource = null;
             UpdateUI(true);
-            await _decks.LoadAsync("http://magicduels.wikia.com/");
+            await _decks.LoadAsync();
             listBoxDecks.DataSource = _decks;
             UpdateUI(false);
         }
@@ -57,5 +56,15 @@ namespace WikiDeck
             }
         }
 
+        private void FormChooseDeck_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _decks.CancelLoad();
+        }
+
+        private async void FormChooseDeck_Shown(object sender, EventArgs e)
+        {
+            if (_decks.Count == 0)
+                await LoadDecks();
+        }
     }
 }

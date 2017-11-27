@@ -89,6 +89,8 @@
             this.Name = "FormChooseDeck";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Choose Deck";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormChooseDeck_FormClosing);
+            this.Shown += new System.EventHandler(this.FormChooseDeck_Shown);
             this.ResumeLayout(false);
 
         }

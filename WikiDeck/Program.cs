@@ -12,13 +12,11 @@ namespace WikiDeck
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Decks decks = new Decks();
-            decks.LoadAsync("http://magicduels.wikia.com/").GetAwaiter().GetResult();
-            Application.Run(new FormMain(decks));
+            Application.Run(new FormMain(args.Length == 0 ? "Decks/" : args[0]));
         }
     }
 }

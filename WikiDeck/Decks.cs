@@ -1,43 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml;
+using WikiaClientLibrary;
 
 namespace WikiDeck
 {
     public class Decks : List<string>
     {
-        public async Task LoadAsync(string site)
+        private string _deckPrefix;
+        private WikiaClient _client;
+
+        public Decks(string deckPrefix, WikiaClient client)
+        {
+            _deckPrefix = deckPrefix;
+            _client = client;
+        }
+
+        public async Task LoadAsync()
         {
             Clear();
 
+            int prefixLength = _deckPrefix.Length;
             string apfrom = "";
             XmlDocument doc = new XmlDocument();
-            string baseCommand = site + "api.php?action=query&list=allpages&apprefix=Decks/&aplimit=500&format=xml";
+            string baseQuery = "&list=allpages&aplimit=500&format=xml&apprefix=" + _deckPrefix;
 
-            using (WebClient client = new WebClient())
+            do
             {
-                do
+                string query = baseQuery;
+                if (!string.IsNullOrEmpty(apfrom))
+                    query += "&apfrom=" + apfrom;
+                string contents = await _client.QueryAsync(query);
+                doc.LoadXml(contents);
+                XmlNodeList deckNodes = doc.SelectNodes("/api/query/allpages/p");
+                foreach (XmlNode deckNode in deckNodes)
                 {
-                    string command = baseCommand;
-                    if (!string.IsNullOrEmpty(apfrom))
-                        command += "&apfrom=" + apfrom;
-                    string contents = await client.DownloadStringTaskAsync(command);
-                    doc.LoadXml(contents);
-                    XmlNodeList deckNodes = doc.SelectNodes("/api/query/allpages/p");
-                    foreach (XmlNode deckNode in deckNodes)
-                    {
-                        string title = deckNode.Attributes.GetNamedItem("title").Value;
-                        string name = title.Substring("Decks/".Length);
-                        Add(name);
-                    }
-                    XmlNode continueNode = doc.SelectSingleNode("/api/query-continue/allpages");
-                    apfrom = continueNode == null ? "" : continueNode.Attributes.GetNamedItem("apfrom").Value;
-                } while (!string.IsNullOrEmpty(apfrom));
-            }
+                    string title = deckNode.Attributes.GetNamedItem("title").Value;
+                    string name = title.Substring(prefixLength);
+                    Add(name);
+                }
+                XmlNode continueNode = doc.SelectSingleNode("/api/query-continue/allpages");
+                apfrom = continueNode == null ? "" : continueNode.Attributes.GetNamedItem("apfrom").Value;
+            } while (!string.IsNullOrEmpty(apfrom));
+        }
+
+        public void CancelLoad()
+        {
+            _client.CancelAsync();
         }
     }
 }

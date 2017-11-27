@@ -18,12 +18,13 @@ namespace WikiDeck
         private Cards _cards;
         private Decks _decks;
         private Deck _deck;
+        private string _deckPrefix;
 
-        public FormMain(Decks decks)
+        public FormMain(string deckPrefix)
         {
             InitializeComponent();
+            _deckPrefix = deckPrefix;
             _cards = new Cards();
-            _decks = decks;
         }
 
         private void buttonValidate_Click(object sender, EventArgs e)
@@ -36,7 +37,7 @@ namespace WikiDeck
             FormChooseDeck dlg = new FormChooseDeck(_decks);
             if (dlg.ShowDialog(this) == DialogResult.OK)
             {
-                Deck deck = new Deck("http://magicduels.wikia.com/", dlg.ChosenDeck);
+                Deck deck = new Deck(new WikiaPage(_client, _deckPrefix + dlg.ChosenDeck));
                 await deck.LoadAsync();
                 _deck = deck;
                 richTextBoxDeck.Text = deck.Cards;
@@ -75,14 +76,14 @@ namespace WikiDeck
             }
         }
 
-        private void buttonUpload_Click(object sender, EventArgs e)
+        private async void buttonUpload_Click(object sender, EventArgs e)
         {
             // TODO: remove this guard once UpdateUI implemented
             if (_deck == null)
                 return;
             _deck.Cards = richTextBoxDeck.Text;
-            _deck.Upload();
-            MessageBox.Show("Nothing Uploaded. Uploading is not yet implemented.");
+            await _deck.UploadAsync();
+            MessageBox.Show("Deck has been uploaded.");
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -112,6 +113,7 @@ namespace WikiDeck
             if (dlg.ShowDialog(this) == DialogResult.OK)
             {
                 _client = dlg.Client;
+                _decks = new Decks(_deckPrefix, _client);
             }
             UpdateUI();
         }
