@@ -8,7 +8,7 @@ using System.IO;
 
 namespace WikiDeck
 {
-    internal class Cards
+    public class Cards
     {
         private List<Card> _cards;
 

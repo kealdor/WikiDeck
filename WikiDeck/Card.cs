@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WikiDeck
 {
-    class Card
+    public class Card
     {
         private string _name;
 

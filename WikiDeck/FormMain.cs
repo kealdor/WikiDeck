@@ -42,7 +42,7 @@ namespace WikiDeck
             FormChooseDeck dlg = new FormChooseDeck(_decks);
             if (dlg.ShowDialog(this) == DialogResult.OK)
             {
-                Deck deck = new Deck(new WikiaPage(_client, _deckPrefix + dlg.ChosenDeck));
+                Deck deck = new Deck(new WikiaPage(_client, _deckPrefix + dlg.ChosenDeck), dlg.ChosenDeck);
                 await deck.LoadAsync();
                 _deck = deck;
                 richTextBoxDeck.Text = deck.Cards;
@@ -144,7 +144,7 @@ namespace WikiDeck
             FormNewDeck dlg = new FormNewDeck(_client, _deckPrefix);
             if (dlg.ShowDialog(this) == DialogResult.OK)
             {
-                _deck = new Deck(dlg.DeckPage);
+                _deck = new Deck(dlg.DeckPage, dlg.DeckName);
                 _deck.SetDefaultContent(dlg.DeckName, _userName);
                 richTextBoxDeck.Text = _deck.Cards;
                 textBoxDeckName.Text = dlg.DeckName;
@@ -156,7 +156,7 @@ namespace WikiDeck
         {
             buttonValidate.Enabled = _deck != null;
             buttonNew.Enabled = !working;
-            buttonLoad.Enabled = !working; ;
+            buttonLoad.Enabled = !working;
             buttonUpload.Enabled = !working && _deck != null;
             buttonDecklist.Enabled = !working && _deck != null;
             richTextBoxDeck.Enabled = _deck != null;
@@ -167,6 +167,15 @@ namespace WikiDeck
         {
             string url = _client.Site + "wiki/" + _deck.PageTitle;
             Process.Start(url);
+        }
+
+        private void buttonDecklist_Click(object sender, EventArgs e)
+        {
+            FormDecklists dlg = new FormDecklists(_client, _deck, _cards, _deckListsPageName, _userName);
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+
+            }
         }
     }
 }

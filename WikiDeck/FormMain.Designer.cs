@@ -124,6 +124,7 @@
             this.buttonDecklist.TabIndex = 8;
             this.buttonDecklist.Text = "Decklist";
             this.buttonDecklist.UseVisualStyleBackColor = true;
+            this.buttonDecklist.Click += new System.EventHandler(this.buttonDecklist_Click);
             // 
             // buttonView
             // 

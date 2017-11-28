@@ -54,6 +54,8 @@
     <Compile Include="Card.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="Deck.cs" />
+    <Compile Include="Decklists.cs" />
+    <Compile Include="DecklistsEntry.cs" />
     <Compile Include="Decks.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="FormCard.cs">
@@ -68,6 +70,12 @@
     <Compile Include="FormChooseDeck.Designer.cs">
       <DependentUpon>FormChooseDeck.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDecklists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDecklists.Designer.cs">
+      <DependentUpon>FormDecklists.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +88,7 @@
     <Compile Include="FormNewDeck.Designer.cs">
       <DependentUpon>FormNewDeck.cs</DependentUpon>
     </Compile>
+    <Compile Include="DecklistsException.cs" />
     <Compile Include="RichTextBoxExtensions.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -95,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormChooseDeck.resx">
       <DependentUpon>FormChooseDeck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDecklists.resx">
+      <DependentUpon>FormDecklists.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
