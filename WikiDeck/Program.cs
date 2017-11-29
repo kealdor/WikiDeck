@@ -18,16 +18,16 @@ namespace WikiDeck
             Application.SetCompatibleTextRenderingDefault(false);
             string deckPrefix;
             string deckListsPageName;
-            if (args.Length > 0)
-            {
+            //if (args.Length > 0)
+            //{
                 deckPrefix = "TestDecks/";
                 deckListsPageName = "TestDecklists";
-            }
-            else
-            {
-                deckPrefix = "Decks/";
-                deckListsPageName = "Decklists";
-            }
+            //}
+            //else
+            //{
+            //    deckPrefix = "Decks/";
+            //    deckListsPageName = "Decklists";
+            //}
             Application.Run(new FormMain(deckPrefix, deckListsPageName));
         }
     }
