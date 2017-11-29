@@ -32,7 +32,7 @@ namespace WikiDeck
                 int spacePos = name.IndexOf(' ');
                 Card card = cards.GetByName(name.Substring(spacePos+1));
                 // Consider: throw exception if not found
-                if (card != null)
+                if (card != null && !(card.IsLand && card.SetCode == "D"))
                 {
                     if (!sets.Contains(card.SetCode))
                         sets.Add(card.SetCode);
