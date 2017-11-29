@@ -30,12 +30,15 @@ namespace WikiDeck
             foreach (string name in names)
             {
                 int spacePos = name.IndexOf(' ');
-                Card card = cards.GetByName(name.Substring(spacePos+1));
                 // Consider: throw exception if not found
-                if (card != null && !(card.IsLand && card.SetCode == "D"))
+                if (spacePos != -1)
                 {
-                    if (!sets.Contains(card.SetCode))
-                        sets.Add(card.SetCode);
+                    Card card = cards.GetByName(name.Substring(spacePos + 1));
+                    if (card != null && !(card.IsLand && card.SetCode == "D"))
+                    {
+                        if (!sets.Contains(card.SetCode))
+                            sets.Add(card.SetCode);
+                    }
                 }
             }
             return sets;
@@ -48,11 +51,11 @@ namespace WikiDeck
             foreach (string name in names)
             {
                 int spacePos = name.IndexOf(' ');
-                Card card = cards.GetByName(name.Substring(spacePos + 1));
                 // Consider: throw exception if not found
-                if (card != null)
+                if (spacePos != -1)
                 {
-                    if (card.Colors != null)
+                    Card card = cards.GetByName(name.Substring(spacePos + 1));
+                    if (card != null && card.Colors != null)
                     {
                         foreach (string color in card.Colors)
                         {

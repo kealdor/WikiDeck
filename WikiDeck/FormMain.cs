@@ -52,8 +52,9 @@ namespace WikiDeck
             }
         }
 
-        private void ValidateDeck()
+        private ValidateDeckResult ValidateDeck()
         {
+            ValidateDeckResult result = ValidateDeckResult.Valid;
             char[] sep = { '\n' };
             string[] cardLines = richTextBoxDeck.Text.Split(sep, StringSplitOptions.RemoveEmptyEntries);
             richTextBoxDeck.Text = "";
@@ -65,6 +66,7 @@ namespace WikiDeck
                 {
                     richTextBoxDeck.AppendText(line, Color.Red);
                     richTextBoxDeck.AppendText("\n");
+                    result = ValidateDeckResult.BadFormat;
                     continue;
                 }
 
@@ -73,6 +75,8 @@ namespace WikiDeck
                 {
                     richTextBoxDeck.AppendText(line, Color.Red);
                     richTextBoxDeck.AppendText("\n");
+                    if (result == ValidateDeckResult.Valid)
+                        result = ValidateDeckResult.UnknownCard;
                     continue;
                 }
 
@@ -80,15 +84,29 @@ namespace WikiDeck
                 richTextBoxDeck.AppendText(correctCaseLine, Color.Green);
                 richTextBoxDeck.AppendText("\n");
             }
+            return result;
         }
 
         private async void buttonUpload_Click(object sender, EventArgs e)
         {
+            ValidateDeckResult valid = ValidateDeck();
+            if (valid == ValidateDeckResult.BadFormat)
+            {
+                ShowMessage("The deck contains entries with an invalid format. Please correct them before uploading.");
+                return;
+            }
+            else if (valid == ValidateDeckResult.UnknownCard)
+            {
+                if (ShowMessage(
+                        "The deck contains unknown cards. Are you sure you wish to continue with the upload?",
+                        MessageButtons.ContinueCancel) != DialogResult.OK)
+                    return;
+            }
             UpdateUI(true);
             _deck.Cards = richTextBoxDeck.Text;
             await _deck.UploadAsync();
             UpdateUI(false);
-            MessageBox.Show("Deck has been uploaded.");
+            ShowMessage("Deck has been uploaded.");
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -172,10 +190,19 @@ namespace WikiDeck
         private void buttonDecklist_Click(object sender, EventArgs e)
         {
             FormDecklists dlg = new FormDecklists(_client, _deck, _cards, _deckListsPageName, _userName);
-            if (dlg.ShowDialog(this) == DialogResult.OK)
-            {
+            dlg.ShowDialog(this);
+        }
 
-            }
+        private DialogResult ShowMessage(string message, MessageButtons buttons = MessageButtons.OK)
+        {
+            FormMessage dlg = new FormMessage(message, buttons);
+            return dlg.ShowDialog(this);
+        }
+
+        private void buttonAbout_Click(object sender, EventArgs e)
+        {
+            FormAbout dlg = new FormAbout();
+            dlg.ShowDialog(this);
         }
     }
 }

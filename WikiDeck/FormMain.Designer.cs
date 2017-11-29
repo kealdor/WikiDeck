@@ -38,6 +38,7 @@
             this.buttonNew = new System.Windows.Forms.Button();
             this.buttonDecklist = new System.Windows.Forms.Button();
             this.buttonView = new System.Windows.Forms.Button();
+            this.buttonAbout = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // richTextBoxDeck
@@ -136,11 +137,22 @@
             this.buttonView.UseVisualStyleBackColor = true;
             this.buttonView.Click += new System.EventHandler(this.buttonView_Click);
             // 
+            // buttonAbout
+            // 
+            this.buttonAbout.Location = new System.Drawing.Point(13, 477);
+            this.buttonAbout.Name = "buttonAbout";
+            this.buttonAbout.Size = new System.Drawing.Size(75, 23);
+            this.buttonAbout.TabIndex = 10;
+            this.buttonAbout.Text = "About...";
+            this.buttonAbout.UseVisualStyleBackColor = true;
+            this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 508);
+            this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.buttonView);
             this.Controls.Add(this.buttonDecklist);
             this.Controls.Add(this.buttonNew);
@@ -172,6 +184,7 @@
         private System.Windows.Forms.Button buttonNew;
         private System.Windows.Forms.Button buttonDecklist;
         private System.Windows.Forms.Button buttonView;
+        private System.Windows.Forms.Button buttonAbout;
     }
 }
 

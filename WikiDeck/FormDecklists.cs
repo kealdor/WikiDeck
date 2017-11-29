@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WikiaClientLibrary;
 
@@ -40,14 +33,14 @@ namespace WikiDeck
             _entry = await _decklists.GetEntryAsync(_deck.DeckName);
             if (_entry == null)
             {
-                labelStatus.Text = "This deck does not have a current entry in decklists.";
+                labelStatus.Text = "This deck does not have an entry in decklists. It will be created.";
                 _entry = new DecklistsEntry();
                 _entry.Link = _deck.DeckName;
                 textBoxTitle.Text = _deck.DeckName;
             }
             else
             {
-                labelStatus.Text = "This deck already has a current entry in decklists.";
+                labelStatus.Text = "This deck already has an entry in decklists. It will be updated";
                 textBoxTitle.Text = _entry.Name;
                 textBoxDescription.Text = _entry.Description;
                 comboBoxStrategy.Text = _entry.Strategy;
