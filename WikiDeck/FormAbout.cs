@@ -15,7 +15,7 @@ namespace WikiDeck
         private void InitializeText()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            labelVersion.Text = "Version " + GetVersion(assembly);
+            labelVersion.Text = "Version " + GetVersion(assembly) +" (alpha)";
             labelCopyright.Text = GetCopyright(assembly);
         }
 
