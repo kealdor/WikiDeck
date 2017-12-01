@@ -43,6 +43,8 @@
             // 
             // richTextBoxDeck
             // 
+            this.richTextBoxDeck.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBoxDeck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxDeck.Location = new System.Drawing.Point(320, 45);
             this.richTextBoxDeck.Name = "richTextBoxDeck";
@@ -52,6 +54,7 @@
             // 
             // buttonValidate
             // 
+            this.buttonValidate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonValidate.Location = new System.Drawing.Point(13, 418);
             this.buttonValidate.Name = "buttonValidate";
             this.buttonValidate.Size = new System.Drawing.Size(75, 23);
@@ -62,6 +65,7 @@
             // 
             // buttonLoad
             // 
+            this.buttonLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonLoad.Location = new System.Drawing.Point(174, 418);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(75, 23);
@@ -82,6 +86,7 @@
             // 
             // buttonUpload
             // 
+            this.buttonUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonUpload.Location = new System.Drawing.Point(13, 447);
             this.buttonUpload.Name = "buttonUpload";
             this.buttonUpload.Size = new System.Drawing.Size(75, 23);
@@ -100,6 +105,8 @@
             // 
             // listBoxCardList
             // 
+            this.listBoxCardList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listBoxCardList.FormattingEnabled = true;
             this.listBoxCardList.Location = new System.Drawing.Point(13, 70);
             this.listBoxCardList.Name = "listBoxCardList";
@@ -109,6 +116,7 @@
             // 
             // buttonNew
             // 
+            this.buttonNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonNew.Location = new System.Drawing.Point(93, 418);
             this.buttonNew.Name = "buttonNew";
             this.buttonNew.Size = new System.Drawing.Size(75, 23);
@@ -119,6 +127,7 @@
             // 
             // buttonDecklist
             // 
+            this.buttonDecklist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDecklist.Location = new System.Drawing.Point(94, 447);
             this.buttonDecklist.Name = "buttonDecklist";
             this.buttonDecklist.Size = new System.Drawing.Size(75, 23);
@@ -129,6 +138,7 @@
             // 
             // buttonView
             // 
+            this.buttonView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonView.Location = new System.Drawing.Point(176, 447);
             this.buttonView.Name = "buttonView";
             this.buttonView.Size = new System.Drawing.Size(75, 23);
@@ -139,6 +149,7 @@
             // 
             // buttonAbout
             // 
+            this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAbout.Location = new System.Drawing.Point(13, 477);
             this.buttonAbout.Name = "buttonAbout";
             this.buttonAbout.Size = new System.Drawing.Size(75, 23);
@@ -151,7 +162,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 508);
+            this.ClientSize = new System.Drawing.Size(637, 505);
             this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.buttonView);
             this.Controls.Add(this.buttonDecklist);
@@ -163,6 +174,8 @@
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonValidate);
             this.Controls.Add(this.richTextBoxDeck);
+            this.MaximumSize = new System.Drawing.Size(653, 2048);
+            this.MinimumSize = new System.Drawing.Size(0, 200);
             this.Name = "FormMain";
             this.Text = "Wiki Deck";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
