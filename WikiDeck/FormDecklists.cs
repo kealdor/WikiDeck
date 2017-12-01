@@ -82,7 +82,6 @@ namespace WikiDeck
             {
                 _entry.Author = "[[User:" + _userName + "|" + _userName + "]]";
             }
-            // TODO: error handling in buttonOK_Click
             UpdateUI(true);
             try
             {
