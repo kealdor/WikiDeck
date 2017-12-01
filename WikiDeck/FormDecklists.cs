@@ -59,6 +59,11 @@ namespace WikiDeck
                 }
                 UpdateUI(false);
             }
+            catch (DecklistsException ex)
+            {
+                ShowError(ex.Message);
+                DisableAllExceptCancel();
+            }
             catch (WebException)
             {
                 ShowError("Network error while accessing Decklists.");
@@ -92,6 +97,11 @@ namespace WikiDeck
             catch (WikiaEditConflictException)
             {
                 ShowError("Upate failed. Decklists is being edited by someone else.");
+            }
+            catch (DecklistsException ex)
+            {
+                ShowError(ex.Message);
+                DisableAllExceptCancel();
             }
             catch (WebException)
             {
