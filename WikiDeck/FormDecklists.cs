@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Drawing;
+using System.Net;
 using System.Windows.Forms;
 using WikiaClientLibrary;
 
@@ -38,28 +39,36 @@ namespace WikiDeck
         private async void FormDecklists_Shown(object sender, EventArgs e)
         {
             UpdateUI(true);
-            _entry = await _decklists.GetEntryAsync(_deck.DeckName);
-            if (_entry == null)
+            try
             {
-                labelStatus.Text = "This deck does not have an entry in decklists. It will be created.";
-                _entry = new DecklistsEntry();
-                _entry.Link = _deck.DeckName;
-                textBoxName.Text = _deck.DeckName;
+                _entry = await _decklists.GetEntryAsync(_deck.DeckName);
+                if (_entry == null)
+                {
+                    SetStatus("This deck does not have an entry in decklists. It will be created.");
+                    _entry = new DecklistsEntry();
+                    _entry.Link = _deck.DeckName;
+                    textBoxName.Text = _deck.DeckName;
+                }
+                else
+                {
+                    SetStatus("This deck already has an entry in decklists. It will be updated.");
+                    textBoxName.Text = _entry.Name;
+                    textBoxDescription.Text = _entry.Description;
+                    comboBoxStrategy.Text = _entry.Strategy;
+                    checkBoxIncludeColorless.Checked = _entry.Colors.IndexOf(colorlessCode) != -1;
+                }
+                UpdateUI(false);
             }
-            else
+            catch (WebException)
             {
-                labelStatus.Text = "This deck already has an entry in decklists. It will be updated.";
-                textBoxName.Text = _entry.Name;
-                textBoxDescription.Text = _entry.Description;
-                comboBoxStrategy.Text = _entry.Strategy;
-                checkBoxIncludeColorless.Checked = _entry.Colors.IndexOf(colorlessCode) != -1;
+                ShowError("Network error while accessing Decklists.");
+                DisableAllExceptCancel();
             }
-            UpdateUI(false);
         }
 
         private async void buttonOK_Click(object sender, EventArgs e)
         {
-            labelStatus.Text = "Updating Decklists....";
+            SetStatus("Updating Decklists....");
             _entry.Name = textBoxName.Text;
             _entry.Strategy = comboBoxStrategy.Text;
             _entry.Description = textBoxDescription.Text;
@@ -75,10 +84,21 @@ namespace WikiDeck
             }
             // TODO: error handling in buttonOK_Click
             UpdateUI(true);
-            await _decklists.Update(_entry);
+            try
+            {
+                await _decklists.Update(_entry);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (WikiaEditConflictException)
+            {
+                ShowError("Upate failed. Decklists is being edited by someone else.");
+            }
+            catch (WebException)
+            {
+                ShowError("Update failed. Network error.");
+            }
             UpdateUI(false);
-            DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void linkLabelColorless_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -93,6 +113,27 @@ namespace WikiDeck
         private void InputTextChanged(object sender, EventArgs e)
         {
             UpdateUI(false);
+        }
+
+        private void ShowError(string message)
+        {
+            labelStatus.ForeColor = Color.Red;
+            labelStatus.Text = message;
+        }
+
+        private void SetStatus(string message)
+        {
+            labelStatus.ForeColor = SystemColors.ControlText;
+            labelStatus.Text = message;
+        }
+
+        private void DisableAllExceptCancel()
+        {
+            foreach (Control control in Controls)
+            {
+                if (control.Name != "buttonCancel" && control.Name != "labelStatus")
+                    control.Enabled = false;
+            }
         }
 
         private void UpdateUI(bool working)
