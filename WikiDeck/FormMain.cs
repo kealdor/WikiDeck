@@ -110,9 +110,26 @@ namespace WikiDeck
             }
             UpdateUI(true);
             _deck.Cards = richTextBoxDeck.Text;
-            await _deck.UploadAsync();
+            try
+            {
+                await _deck.UploadAsync();
+                ShowMessage("Deck has been uploaded.");
+            }
+            catch (WikiaEditConflictException)
+            {
+                ShowMessage("Unable to upload. Someone else is editing this deck. Please use 'view' to check their changes before trying again.");
+            }
+            catch (WikiaEditException ex)
+            {
+                if (ex.ErrorCode == "blocked")
+                    BlockedUser(); // will exit app
+                ShowMessage("Upload failed. " + ex.Message);
+            }
+            catch (WebException)
+            {
+                ShowMessage("Upload failed due to a network error.");
+            }
             UpdateUI(false);
-            ShowMessage("Deck has been uploaded.");
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -209,6 +226,12 @@ namespace WikiDeck
         {
             FormAbout dlg = new FormAbout();
             dlg.ShowDialog(this);
+        }
+
+        private void BlockedUser()
+        {
+            ShowMessage("You have been blocked from editing wiki pages.");
+            Application.Exit();
         }
     }
 }
