@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WikiaClientLibrary;
 
@@ -43,11 +38,22 @@ namespace WikiDeck
             if (dlg.ShowDialog(this) == DialogResult.OK)
             {
                 Deck deck = new Deck(new WikiaPage(_client, _deckPrefix + dlg.ChosenDeck), dlg.ChosenDeck);
-                await deck.LoadAsync();
-                _deck = deck;
-                richTextBoxDeck.Text = deck.Cards;
-                textBoxDeckName.Text = dlg.ChosenDeck;
-                ValidateDeck();
+                UpdateUI(true);
+                try
+                {
+                    await deck.LoadAsync();
+                    _deck = deck;
+                    richTextBoxDeck.Text = deck.Cards;
+                    textBoxDeckName.Text = dlg.ChosenDeck;
+                    ValidateDeck();
+                }
+                catch (WebException)
+                {
+                    ShowMessage("There was a network error while loading the deck.");
+                    _deck = null;
+                    richTextBoxDeck.Text = "";
+                    textBoxDeckName.Text = "";
+                }
                 UpdateUI(false);
             }
         }

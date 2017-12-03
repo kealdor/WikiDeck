@@ -30,7 +30,6 @@ namespace WikiDeck
             foreach (string name in names)
             {
                 int spacePos = name.IndexOf(' ');
-                // Consider: throw exception if not found
                 if (spacePos != -1)
                 {
                     Card card = cards.GetByName(name.Substring(spacePos + 1));
@@ -51,7 +50,6 @@ namespace WikiDeck
             foreach (string name in names)
             {
                 int spacePos = name.IndexOf(' ');
-                // Consider: throw exception if not found
                 if (spacePos != -1)
                 {
                     Card card = cards.GetByName(name.Substring(spacePos + 1));
