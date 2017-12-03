@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -38,14 +39,28 @@ namespace WikiDeck
         {
             listBoxDecks.DataSource = null;
             UpdateUI(true);
-            await _decks.LoadAsync();
+            try
+            {
+                await _decks.LoadAsync();
+            }
+            catch (WebException)
+            {
+                WarnUserOfError();
+            }
             listBoxDecks.DataSource = _decks;
             UpdateUI(false);
         }
 
+        private void WarnUserOfError()
+        {
+            FormMessage dlg = new FormMessage("There was a network error while downloading decks. The list of decks may be empty or incomplete.");
+            dlg.ShowDialog(this);
+        }
+
         private void UpdateUI(bool loading)
         {
-            buttonOk.Enabled = !loading;
+            buttonOk.Enabled = !loading && _decks.Count > 0;
+            buttonRefresh.Enabled = !loading;
             if (loading)
             {
                 listBoxDecks.MouseDoubleClick -= listBoxDecks_MouseDoubleClick;
