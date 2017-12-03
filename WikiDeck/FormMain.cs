@@ -64,13 +64,16 @@ namespace WikiDeck
             char[] sep = { '\n' };
             string[] cardLines = richTextBoxDeck.Text.Split(sep, StringSplitOptions.RemoveEmptyEntries);
             richTextBoxDeck.Text = "";
-            Regex cardEntry = new Regex(@"^(\d+)\s+(.+)$");
+            Regex cardEntry = new Regex(@"^(\d+)\s*x?\s+(.+)$");
             foreach (string line in cardLines)
             {
-                Match match = cardEntry.Match(line);
+                string trimmedLine = line.Trim();
+                if (trimmedLine.Length == 0)
+                    continue; // foreach
+                Match match = cardEntry.Match(trimmedLine);
                 if (!match.Success)
                 {
-                    richTextBoxDeck.AppendText(line, Color.Red);
+                    richTextBoxDeck.AppendText(trimmedLine, Color.Red);
                     richTextBoxDeck.AppendText("\n");
                     result = ValidateDeckResult.BadFormat;
                     continue;
@@ -79,7 +82,7 @@ namespace WikiDeck
                 Card card = _cards.GetByName(match.Groups[2].Value);
                 if (card == null)
                 {
-                    richTextBoxDeck.AppendText(line, Color.Red);
+                    richTextBoxDeck.AppendText(trimmedLine, Color.Red);
                     richTextBoxDeck.AppendText("\n");
                     if (result == ValidateDeckResult.Valid)
                         result = ValidateDeckResult.UnknownCard;
