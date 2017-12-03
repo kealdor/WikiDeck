@@ -96,11 +96,17 @@ namespace WikiDeck
             }
             catch (WikiaEditConflictException)
             {
-                ShowError("Upate failed. Decklists is being edited by someone else.");
+                ShowError("Update failed. Decklists is being edited by someone else.");
+            }
+            catch (WikiaEditException ex)
+            {
+                if (ex.ErrorCode == "blocked")
+                    BlockedUser(); // will exit app
+                ShowError("Update failed. " + ex.Message);
             }
             catch (DecklistsException ex)
             {
-                ShowError(ex.Message);
+                ShowError("Cannot update decklists. " + ex.Message);
                 DisableAllExceptCancel();
             }
             catch (WebException)
@@ -113,7 +119,7 @@ namespace WikiDeck
         private void linkLabelColorless_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string msg = "The available card data does not contain enough information to determine if a card is genuinely colorless, ";
-            msg += "so WikiDeck cannot to automatically add \"Colorles\" to the deck colors. ";
+            msg += "so WikiDeck cannot to automatically add \"Colorless\" to the deck colors. ";
             msg += "Check this box if the deck contains genuinely colorless (not artifact) cards.";
             FormMessage dlg = new FormMessage(msg);
             dlg.ShowDialog(this);
@@ -143,6 +149,13 @@ namespace WikiDeck
                 if (control.Name != "buttonCancel" && control.Name != "labelStatus")
                     control.Enabled = false;
             }
+        }
+
+        private void BlockedUser()
+        {
+            FormMessage dlg = new FormMessage("You have been blocked from editing wiki pages.");
+            dlg.ShowDialog(this);
+            Application.Exit();
         }
 
         private void UpdateUI(bool working)

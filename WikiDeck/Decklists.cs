@@ -65,7 +65,7 @@ namespace WikiDeck
             {
                 int startPos = _page.Content.IndexOf("<!-- Add your deck info above here! -->");
                 if (startPos == -1)
-                    throw new DecklistsException("Insertion point not found.");
+                    throw new DecklistsException("Insertion point not found in decklists.");
                 string start = _page.Content.Substring(0, startPos - 1);
                 string end = _page.Content.Substring(startPos);
                 _page.Content = start + "\n" + entry.ToString() + "\n" + end;
@@ -91,7 +91,7 @@ namespace WikiDeck
                 ++index;
             }
             if (index >= text.Length)
-                throw new DecklistsException("Unclosed deck entry.");
+                throw new DecklistsException("Invalid deck entry found in decklists.");
             return index - startIndex + 1;
         }
     }
