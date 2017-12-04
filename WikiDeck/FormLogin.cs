@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using WikiaClientLibrary;
 
@@ -7,12 +8,15 @@ namespace WikiDeck
 {
     public partial class FormLogin : Form
     {
+        private string _userAgent;
+
         public WikiaClient Client { get; set; }
         public string UserName { get; internal set; }
 
         public FormLogin()
         {
             InitializeComponent();
+            _userAgent = MakeUserAgentString();
             LoadDetails();
             labelStatus.Text = "";
             textBoxSite.TextChanged += InputTextChanged;
@@ -26,7 +30,7 @@ namespace WikiDeck
             labelStatus.ForeColor = SystemColors.ControlText;
             labelStatus.Text = "Logging in...";
     
-            Client = new WikiaClient(textBoxSite.Text);
+            Client = new WikiaClient(textBoxSite.Text, _userAgent);
             bool success = await Client.LoginAsync(textBoxUsername.Text, textBoxPassword.Text);
             if (success)
             {
@@ -96,5 +100,10 @@ namespace WikiDeck
             buttonOK.Enabled = okEnabled;
         }
 
+        private string MakeUserAgentString()
+        {
+            string version = AppVersion.GetVersion();
+            return $"WikiDeck/{version} (https://github.com/Aspallar/WikiDeck)";
+        }
     }
 }

@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppVersion.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="Deck.cs" />

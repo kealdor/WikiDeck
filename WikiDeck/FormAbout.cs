@@ -15,7 +15,7 @@ namespace WikiDeck
         private void InitializeText()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            labelVersion.Text = "Version " + GetVersion(assembly) +" (alpha)";
+            labelVersion.Text = "Version " + AppVersion.GetVersion(assembly);
             labelCopyright.Text = GetCopyright(assembly);
         }
 
@@ -25,12 +25,6 @@ namespace WikiDeck
             if (attributes.Length == 0)
                 return "";
             return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-        }
-
-        private string GetVersion(Assembly assembly)
-        {
-            Version version = assembly.GetName().Version;
-            return $"{version.Major}.{version.Minor}.{version.Build}";
         }
     }
 }

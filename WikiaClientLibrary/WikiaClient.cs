@@ -13,12 +13,13 @@ namespace WikiaClientLibrary
 
         public string Site { get; private set; }
 
-        public WikiaClient(string site)
+        public WikiaClient(string site, string userAgent)
         {
             Site = site;
             if (!Site.EndsWith("/"))
                 Site += "/";
             _client = new ExtendedWebClient();
+            _client.UserAgent = userAgent;
         }
 
         public void CancelAsync()
