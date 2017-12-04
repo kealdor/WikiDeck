@@ -34,6 +34,7 @@ namespace WikiaClientLibrary
             HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
             request.CookieContainer = Cookies;
             request.UserAgent = UserAgent;
+            request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
             return request;
         }
         
