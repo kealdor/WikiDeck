@@ -23,8 +23,6 @@ namespace WikiDeck
             InitializeComponent();
             _deckPrefix = deckPrefix;
             _deckListsPageName = deckListsPageName;
-            _cards = new Cards();
-            listBoxCardList.DataSource = _cards.GetAll();
         }
 
         private void buttonValidate_Click(object sender, EventArgs e)
@@ -165,7 +163,10 @@ namespace WikiDeck
             {
                 _client = dlg.Client;
                 _userName = dlg.UserName;
+                _cards = new Cards(dlg.CardDataFileName);
                 _decks = new Decks(_deckPrefix, _client);
+                listBoxCardList.DataSource = _cards.GetAll();
+                Text = Text + " - " + dlg.WikiName;
             }
             else
             {

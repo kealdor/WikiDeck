@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
+using System.Linq;
 using WikiaClientLibrary;
+
 
 namespace WikiDeck
 {
@@ -10,16 +12,25 @@ namespace WikiDeck
     {
         private string _userAgent;
 
-        public WikiaClient Client { get; set; }
-        public string UserName { get; internal set; }
+        private List<SiteInfo> _sites = new List<SiteInfo>()
+        {
+            new SiteInfo { Name = "Magic Duels", Url = "http://magicduels.wikia.com", CardDataFileName = "DuelsCards.json" },
+            new SiteInfo { Name = "Magic Arena", Url = "http://magicarena.wikia.com", CardDataFileName = "ArenaCards.json" },
+        };
+
+        public WikiaClient Client { get; private set; }
+        public string UserName { get; private set; }
+        public string CardDataFileName { get; private set; }
+        public string WikiName { get; set; }
 
         public FormLogin()
         {
             InitializeComponent();
             _userAgent = MakeUserAgentString();
+            comboBoxSite.DataSource = _sites;
+            comboBoxSite.DisplayMember = nameof(SiteInfo.Name);
             LoadDetails();
             labelStatus.Text = "";
-            textBoxSite.TextChanged += InputTextChanged;
             textBoxUsername.TextChanged += InputTextChanged;
             textBoxPassword.TextChanged += InputTextChanged;
             UpdateUI();
@@ -29,14 +40,18 @@ namespace WikiDeck
         {
             labelStatus.ForeColor = SystemColors.ControlText;
             labelStatus.Text = "Logging in...";
+
+            SiteInfo site = (SiteInfo)comboBoxSite.SelectedItem;
     
-            Client = new WikiaClient(textBoxSite.Text, _userAgent);
+            Client = new WikiaClient(site.Url, _userAgent);
             bool success = await Client.LoginAsync(textBoxUsername.Text, textBoxPassword.Text);
             if (success)
             {
                 SaveDetails();
                 DialogResult = DialogResult.OK;
                 UserName = textBoxUsername.Text;
+                CardDataFileName = site.CardDataFileName;
+                WikiName = site.Name;
                 Close();
             }
             else
@@ -51,7 +66,7 @@ namespace WikiDeck
         private void SaveDetails()
         {
             Properties.Settings.Default.RememberPassword = checkBoxRememberPassword.Checked;
-            Properties.Settings.Default.Site = textBoxSite.Text;
+            Properties.Settings.Default.Site = ((SiteInfo)(comboBoxSite.SelectedItem)).Url;
             Properties.Settings.Default.Username = textBoxUsername.Text;
             if (checkBoxRememberPassword.Checked)
                 Properties.Settings.Default.Password = Encryption.Encrypt(textBoxPassword.Text);
@@ -63,7 +78,10 @@ namespace WikiDeck
         private void LoadDetails()
         {
             checkBoxRememberPassword.Checked = Properties.Settings.Default.RememberPassword;
-            textBoxSite.Text = Properties.Settings.Default.Site;
+            string url = Properties.Settings.Default.Site;
+            SiteInfo siteInfo = _sites.Where(x => x.Url == url).SingleOrDefault();
+            if (siteInfo != null)
+                comboBoxSite.SelectedItem = siteInfo;
             textBoxUsername.Text = Properties.Settings.Default.Username;
             string password = Properties.Settings.Default.Password;
             if (!string.IsNullOrEmpty(password))
@@ -87,16 +105,8 @@ namespace WikiDeck
         private void UpdateUI()
         {
             bool okEnabled =
-                textBoxSite.Text != "" &&
                 textBoxUsername.Text != "" &&
                 textBoxPassword.Text != "";
-            if (okEnabled)
-            {
-                string site = textBoxSite.Text;
-                okEnabled = site.StartsWith("http") &&
-                    site.IndexOf("?") == -1 &&
-                    Uri.IsWellFormedUriString(site, UriKind.Absolute);
-            }
             buttonOK.Enabled = okEnabled;
         }
 

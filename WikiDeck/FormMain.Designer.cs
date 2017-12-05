@@ -175,7 +175,7 @@
             this.Controls.Add(this.buttonValidate);
             this.Controls.Add(this.richTextBoxDeck);
             this.MaximumSize = new System.Drawing.Size(653, 2048);
-            this.MinimumSize = new System.Drawing.Size(0, 200);
+            this.MinimumSize = new System.Drawing.Size(16, 200);
             this.Name = "FormMain";
             this.Text = "Wiki Deck";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);

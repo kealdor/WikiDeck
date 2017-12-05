@@ -33,11 +33,11 @@
             System.Windows.Forms.Label label3;
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.textBoxSite = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.labelStatus = new System.Windows.Forms.Label();
             this.checkBoxRememberPassword = new System.Windows.Forms.CheckBox();
+            this.comboBoxSite = new System.Windows.Forms.ComboBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
@@ -90,13 +90,6 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // textBoxSite
-            // 
-            this.textBoxSite.Location = new System.Drawing.Point(74, 13);
-            this.textBoxSite.Name = "textBoxSite";
-            this.textBoxSite.Size = new System.Drawing.Size(186, 20);
-            this.textBoxSite.TabIndex = 1;
-            // 
             // textBoxPassword
             // 
             this.textBoxPassword.Location = new System.Drawing.Point(76, 64);
@@ -131,11 +124,21 @@
             this.checkBoxRememberPassword.Text = "Remember password";
             this.checkBoxRememberPassword.UseVisualStyleBackColor = true;
             // 
+            // comboBoxSite
+            // 
+            this.comboBoxSite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSite.FormattingEnabled = true;
+            this.comboBoxSite.Location = new System.Drawing.Point(76, 13);
+            this.comboBoxSite.Name = "comboBoxSite";
+            this.comboBoxSite.Size = new System.Drawing.Size(184, 21);
+            this.comboBoxSite.TabIndex = 1;
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 183);
+            this.Controls.Add(this.comboBoxSite);
             this.Controls.Add(this.checkBoxRememberPassword);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(label3);
@@ -143,7 +146,6 @@
             this.Controls.Add(label1);
             this.Controls.Add(this.textBoxUsername);
             this.Controls.Add(this.textBoxPassword);
-            this.Controls.Add(this.textBoxSite);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -162,10 +164,10 @@
 
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.TextBox textBoxSite;
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.TextBox textBoxUsername;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.CheckBox checkBoxRememberPassword;
+        private System.Windows.Forms.ComboBox comboBoxSite;
     }
 }

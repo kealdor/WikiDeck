@@ -10,9 +10,9 @@ namespace WikiDeck
     {
         private List<Card> _cards;
 
-        public Cards()
+        public Cards(string dataFileName)
         {
-            _cards = GetData();
+            _cards = GetData(dataFileName);
         }
 
         public Card GetByName(string cardName)
@@ -33,9 +33,9 @@ namespace WikiDeck
             return results.ToList();
         }
 
-        private List<Card> GetData()
+        private List<Card> GetData(string dataFileName)
         {
-            string json = File.ReadAllText(@"cards.json");
+            string json = File.ReadAllText(dataFileName);
             return JsonConvert.DeserializeObject<List<Card>>(json);
         }
 
