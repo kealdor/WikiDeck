@@ -54,6 +54,7 @@
     <Compile Include="AppVersion.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="Cards.cs" />
+    <Compile Include="ColorInfo.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Decklists.cs" />
     <Compile Include="DecklistsEntry.cs" />
@@ -76,6 +77,12 @@
     </Compile>
     <Compile Include="FormChooseDeck.Designer.cs">
       <DependentUpon>FormChooseDeck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormColorLegend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormColorLegend.Designer.cs">
+      <DependentUpon>FormColorLegend.cs</DependentUpon>
     </Compile>
     <Compile Include="FormDecklists.cs">
       <SubType>Form</SubType>
@@ -124,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormChooseDeck.resx">
       <DependentUpon>FormChooseDeck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormColorLegend.resx">
+      <DependentUpon>FormColorLegend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDecklists.resx">
       <DependentUpon>FormDecklists.cs</DependentUpon>

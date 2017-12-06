@@ -40,6 +40,7 @@
             this.buttonView = new System.Windows.Forms.Button();
             this.buttonAbout = new System.Windows.Forms.Button();
             this.labelCardCount = new System.Windows.Forms.Label();
+            this.linkLabelColorLegend = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // richTextBoxDeck
@@ -159,20 +160,34 @@
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
-            // labelTotalCards
+            // labelCardCount
             // 
+            this.labelCardCount.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.labelCardCount.AutoSize = true;
             this.labelCardCount.Location = new System.Drawing.Point(539, 487);
-            this.labelCardCount.Name = "labelTotalCards";
+            this.labelCardCount.Name = "labelCardCount";
             this.labelCardCount.Size = new System.Drawing.Size(79, 13);
             this.labelCardCount.TabIndex = 11;
             this.labelCardCount.Text = "Card Count NN";
+            // 
+            // linkLabelColorLegend
+            // 
+            this.linkLabelColorLegend.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.linkLabelColorLegend.AutoSize = true;
+            this.linkLabelColorLegend.Location = new System.Drawing.Point(320, 487);
+            this.linkLabelColorLegend.Name = "linkLabelColorLegend";
+            this.linkLabelColorLegend.Size = new System.Drawing.Size(84, 13);
+            this.linkLabelColorLegend.TabIndex = 12;
+            this.linkLabelColorLegend.TabStop = true;
+            this.linkLabelColorLegend.Text = "Validation colors";
+            this.linkLabelColorLegend.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelColorLegend_LinkClicked);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 505);
+            this.Controls.Add(this.linkLabelColorLegend);
             this.Controls.Add(this.labelCardCount);
             this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.buttonView);
@@ -210,6 +225,7 @@
         private System.Windows.Forms.Button buttonView;
         private System.Windows.Forms.Button buttonAbout;
         private System.Windows.Forms.Label labelCardCount;
+        private System.Windows.Forms.LinkLabel linkLabelColorLegend;
     }
 }
 

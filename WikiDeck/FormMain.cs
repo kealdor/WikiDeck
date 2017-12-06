@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net;
@@ -11,6 +12,15 @@ namespace WikiDeck
 {
     public partial class FormMain : Form
     {
+        private static Dictionary<ValidateDeckResult, ColorInfo> validationColors = new Dictionary<ValidateDeckResult, ColorInfo>()
+        {
+            {ValidateDeckResult.Valid, new ColorInfo(Color.Green, "green")},
+            {ValidateDeckResult.BadFormat, new ColorInfo(Color.Red, "red")},
+            {ValidateDeckResult.UnknownCard, new ColorInfo(Color.Blue, "blue")},
+            {ValidateDeckResult.ContainsDuplicates, new ColorInfo(Color.Tomato, "tomato")},
+            {ValidateDeckResult.MaxInHandExceeded, new ColorInfo(Color.DarkViolet, "dark violet")},
+        };
+
         private WikiaClient _client;
         private Cards _cards;
         private Decks _decks;
@@ -18,12 +28,14 @@ namespace WikiDeck
         private string _deckPrefix;
         private string _deckListsPageName;
         private string _userName;
+        private FormColorLegend _colorLegend;
 
         public FormMain(string deckPrefix, string deckListsPageName)
         {
             InitializeComponent();
             _deckPrefix = deckPrefix;
             _deckListsPageName = deckListsPageName;
+            _colorLegend = null;
             SetCardCountText(0);
         }
 
@@ -74,7 +86,7 @@ namespace WikiDeck
                 Match match = cardEntry.Match(trimmedLine);
                 if (!match.Success)
                 {
-                    richTextBoxDeck.AppendText(trimmedLine, Color.Red);
+                    richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.BadFormat].Color);
                     richTextBoxDeck.AppendText("\n");
                     result |= ValidateDeckResult.BadFormat;
                     continue;
@@ -83,7 +95,7 @@ namespace WikiDeck
                 int amount;
                 if (!int.TryParse(match.Groups[1].Value, out amount) || amount < 0)
                 {
-                    richTextBoxDeck.AppendText(trimmedLine, Color.Red);
+                    richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.BadFormat].Color);
                     richTextBoxDeck.AppendText("\n");
                     result |= ValidateDeckResult.BadFormat;
                     continue;
@@ -93,7 +105,7 @@ namespace WikiDeck
                 Card card = _cards.GetByName(match.Groups[2].Value);
                 if (card == null)
                 {
-                    richTextBoxDeck.AppendText(trimmedLine, Color.Blue);
+                    richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.UnknownCard].Color);
                     richTextBoxDeck.AppendText("\n");
                     result |= ValidateDeckResult.UnknownCard;
                     continue;
@@ -101,7 +113,7 @@ namespace WikiDeck
 
                 if (richTextBoxDeck.Text.IndexOf(card.Name, StringComparison.InvariantCultureIgnoreCase) != -1)
                 {
-                    richTextBoxDeck.AppendText(trimmedLine, Color.Tomato);
+                    richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.ContainsDuplicates].Color);
                     richTextBoxDeck.AppendText("\n");
                     result |= ValidateDeckResult.ContainsDuplicates;
                     continue;
@@ -109,14 +121,14 @@ namespace WikiDeck
 
                 if (amount > card.MaxInHand)
                 {
-                    richTextBoxDeck.AppendText(trimmedLine, Color.DarkViolet);
+                    richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.MaxInHandExceeded].Color);
                     richTextBoxDeck.AppendText("\n");
                     result |= ValidateDeckResult.MaxInHandExceeded;
                     continue;
                 }
 
                 string correctCaseLine = match.Groups[1].Value + " " + card.Name;
-                richTextBoxDeck.AppendText(correctCaseLine, Color.Green);
+                richTextBoxDeck.AppendText(correctCaseLine, validationColors[ValidateDeckResult.Valid].Color);
                 richTextBoxDeck.AppendText("\n");
             }
             if (cardCount < 60)
@@ -306,6 +318,20 @@ namespace WikiDeck
             Application.Exit();
         }
 
+        private void linkLabelColorLegend_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (_colorLegend == null)
+            {
+                _colorLegend = new FormColorLegend(validationColors);
+                _colorLegend.FormClosed += ColorLegend_FormClosed;
+                _colorLegend.Show(this);
+            }
+        }
+
+        private void ColorLegend_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _colorLegend = null;
+        }
     }
 }
 
