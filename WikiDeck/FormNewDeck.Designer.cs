@@ -48,9 +48,11 @@
             // textBoxDeckName
             // 
             this.textBoxDeckName.Location = new System.Drawing.Point(16, 30);
+            this.textBoxDeckName.MaxLength = 255;
             this.textBoxDeckName.Name = "textBoxDeckName";
             this.textBoxDeckName.Size = new System.Drawing.Size(372, 20);
             this.textBoxDeckName.TabIndex = 1;
+            this.textBoxDeckName.TextChanged += new System.EventHandler(this.textBoxDeckName_TextChanged);
             // 
             // buttonOK
             // 

@@ -19,12 +19,13 @@ namespace WikiDeck
             _client = client;
             _deckPrefix = deckPrefix;
             labelStatus.Text = "";
+            labelStatus.UseMnemonic = false;
         }
 
         private async void buttonOK_Click(object sender, EventArgs e)
         {
             labelStatus.ForeColor = SystemColors.ControlText;
-            labelStatus.Text = "Checking name availability";
+            SetStatus("Checking name availability", false);
             UpdateUI(true);
             string name = _deckPrefix + textBoxDeckName.Text;
             WikiaPage page = new WikiaPage(_client, name);
@@ -32,8 +33,7 @@ namespace WikiDeck
             UpdateUI(false);
             if (page.Exists)
             {
-                labelStatus.ForeColor = Color.Red;
-                labelStatus.Text = "A deck with that name already exists.";
+                SetStatus("A deck with that name already exists.", true);
             }
             else
             {
@@ -53,6 +53,41 @@ namespace WikiDeck
         private void FormNewDeck_FormClosing(object sender, FormClosingEventArgs e)
         {
             _client.CancelAsync();
+        }
+
+
+        private void textBoxDeckName_TextChanged(object sender, EventArgs e)
+        {
+            string text = textBoxDeckName.Text;
+            if (text == "")
+            {
+                SetStatus("");
+                buttonOK.Enabled = false;
+                return;
+            }
+            if (text.StartsWith(" "))
+            {
+                buttonOK.Enabled = false;
+                SetStatus("Deck name cannot start with a space", true);
+                return;
+            }
+            string badChars = DeckNames.ValidateCharacters(text);
+            if (badChars != "")
+            {
+                buttonOK.Enabled = false;
+                string plural = badChars.Length > 1 ? "s" : "";
+                SetStatus($"Invalid character{plural} in name: {badChars}", true);
+                return;
+            }
+            SetStatus("");
+            buttonOK.Enabled = true;
+        }
+
+
+        private void SetStatus(string message, bool isError = false)
+        {
+            labelStatus.ForeColor = isError ? Color.Red : SystemColors.ControlText;
+            labelStatus.Text = message;
         }
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="Ruling.cs" />
     <Compile Include="SiteInfo.cs" />
     <Compile Include="ValidateDeckResult.cs" />
+    <Compile Include="DeckNames.cs" />
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
