@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WikiaClientLibrary;
@@ -23,6 +24,7 @@ namespace WikiDeck
             InitializeComponent();
             _deckPrefix = deckPrefix;
             _deckListsPageName = deckListsPageName;
+            SetCardCountText(0);
         }
 
         private void buttonValidate_Click(object sender, EventArgs e)
@@ -58,6 +60,7 @@ namespace WikiDeck
 
         private ValidateDeckResult ValidateDeck()
         {
+            int cardCount = 0;
             ValidateDeckResult result = ValidateDeckResult.Valid;
             char[] sep = { '\n' };
             string[] cardLines = richTextBoxDeck.Text.Split(sep, StringSplitOptions.RemoveEmptyEntries);
@@ -73,17 +76,42 @@ namespace WikiDeck
                 {
                     richTextBoxDeck.AppendText(trimmedLine, Color.Red);
                     richTextBoxDeck.AppendText("\n");
-                    result = ValidateDeckResult.BadFormat;
+                    result |= ValidateDeckResult.BadFormat;
                     continue;
                 }
+
+                int amount;
+                if (!int.TryParse(match.Groups[1].Value, out amount) || amount < 0)
+                {
+                    richTextBoxDeck.AppendText(trimmedLine, Color.Red);
+                    richTextBoxDeck.AppendText("\n");
+                    result |= ValidateDeckResult.BadFormat;
+                    continue;
+                }
+                cardCount += amount;
 
                 Card card = _cards.GetByName(match.Groups[2].Value);
                 if (card == null)
                 {
-                    richTextBoxDeck.AppendText(trimmedLine, Color.Red);
+                    richTextBoxDeck.AppendText(trimmedLine, Color.Blue);
                     richTextBoxDeck.AppendText("\n");
-                    if (result == ValidateDeckResult.Valid)
-                        result = ValidateDeckResult.UnknownCard;
+                    result |= ValidateDeckResult.UnknownCard;
+                    continue;
+                }
+
+                if (richTextBoxDeck.Text.IndexOf(card.Name, StringComparison.InvariantCultureIgnoreCase) != -1)
+                {
+                    richTextBoxDeck.AppendText(trimmedLine, Color.Tomato);
+                    richTextBoxDeck.AppendText("\n");
+                    result |= ValidateDeckResult.ContainsDuplicates;
+                    continue;
+                }
+
+                if (amount > card.MaxInHand)
+                {
+                    richTextBoxDeck.AppendText(trimmedLine, Color.DarkViolet);
+                    richTextBoxDeck.AppendText("\n");
+                    result |= ValidateDeckResult.MaxInHandExceeded;
                     continue;
                 }
 
@@ -91,22 +119,42 @@ namespace WikiDeck
                 richTextBoxDeck.AppendText(correctCaseLine, Color.Green);
                 richTextBoxDeck.AppendText("\n");
             }
+            if (cardCount < 60)
+                result |= ValidateDeckResult.LessThan60Cards;
+            SetCardCountText(cardCount);
             return result;
+        }
+
+        private void SetCardCountText(int cardCount)
+        {
+            labelCardCount.Text = "Card Count " + cardCount.ToString();
         }
 
         private async void buttonUpload_Click(object sender, EventArgs e)
         {
             ValidateDeckResult valid = ValidateDeck();
-            if (valid == ValidateDeckResult.BadFormat)
+            if ((valid & ValidateDeckResult.BadFormat) != 0)
             {
-                ShowMessage("The deck contains entries with an invalid format. Please correct them before uploading.");
+                ShowMessage("The deck contains entries with an invalid format (shown in red). Please correct them before uploading.");
                 return;
             }
-            else if (valid == ValidateDeckResult.UnknownCard)
+            else if (valid != ValidateDeckResult.Valid)
             {
-                if (ShowMessage(
-                        "The deck contains unknown cards. Are you sure you wish to continue with the upload?",
-                        MessageButtons.ContinueCancel) != DialogResult.OK)
+                StringBuilder msg = new StringBuilder("The deck contains the following error");
+                if ((valid & (valid - 1)) != 0)
+                    msg.Append("s");
+                msg.Append(".\n\n");
+                if ((valid & ValidateDeckResult.ContainsDuplicates) != 0)
+                    msg.Append("Duplicates; ");
+                if ((valid & ValidateDeckResult.UnknownCard) != 0)
+                    msg.Append("Unknown cards; ");
+                if ((valid & ValidateDeckResult.MaxInHandExceeded) != 0)
+                    msg.Append("Invalid amounts; ");
+                if ((valid & ValidateDeckResult.LessThan60Cards) != 0)
+                    msg.Append("Less than 60 cards; ");
+                msg.Remove(msg.Length - 2, 2);
+                msg.Append(". \n\nContinue with upload?");
+                if (ShowMessage(msg.ToString(), MessageButtons.ContinueCancel) != DialogResult.OK)
                     return;
             }
             UpdateUI(true);
@@ -147,7 +195,14 @@ namespace WikiDeck
             if (_deck == null)
                 return;
             string cardName = (string)((ListBox)sender).SelectedItem;
-            richTextBoxDeck.AppendText("4 " + cardName + "\n");
+            Card card = _cards.GetByName(cardName);
+            if (richTextBoxDeck.Text.IndexOf(card.Name, StringComparison.InvariantCultureIgnoreCase) != -1)
+            {
+                System.Media.SystemSounds.Asterisk.Play();
+                return;
+            }
+            richTextBoxDeck.AppendText(card.InitialAmount.ToString() + " " + cardName + "\n");
+            ValidateDeck();
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
@@ -193,6 +248,7 @@ namespace WikiDeck
                 _deck.SetDefaultContent(dlg.DeckName, _userName);
                 richTextBoxDeck.Text = _deck.Cards;
                 textBoxDeckName.Text = dlg.DeckName;
+                ValidateDeck();
             }
             UpdateUI(false);
         }

@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="DecklistsException.cs" />
     <Compile Include="MessageButtons.cs" />
+    <Compile Include="RarityInfo.cs" />
     <Compile Include="RichTextBoxExtensions.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>

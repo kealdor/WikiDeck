@@ -1,10 +1,20 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace WikiDeck
 {
     public class Card
     {
+        private static Dictionary<string, int> rarityToMaxInHandMap = new Dictionary <string, int>()
+        {
+            { "Common", 4 },
+            { "Uncommon", 3 },
+            { "Rare", 2 },
+            { "Mythic Rare", 1 },
+            { "Basic Land", int.MaxValue }
+        };
+
         private string _name;
 
         [JsonProperty(Required = Required.Always)]
@@ -32,6 +42,7 @@ namespace WikiDeck
         [JsonProperty("cmc")]
         public int Cmc { get; set; }
 
+        [JsonProperty(Required = Required.Always)]
         public string Rarity { get; set; }
 
         public string SetCode { get; set; }
@@ -67,5 +78,16 @@ namespace WikiDeck
         public string LowerCaseName { get; private set; }
 
         public bool IsLand => Types.Contains("Land");
+
+        public int MaxInHand => rarityToMaxInHandMap[Rarity];
+
+        public int InitialAmount
+        {
+            get
+            {
+                int max = MaxInHand;
+                return (max > 4) ? 6 : max;
+            }
+        }
     }
 }

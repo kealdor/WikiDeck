@@ -39,6 +39,7 @@
             this.buttonDecklist = new System.Windows.Forms.Button();
             this.buttonView = new System.Windows.Forms.Button();
             this.buttonAbout = new System.Windows.Forms.Button();
+            this.labelCardCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // richTextBoxDeck
@@ -48,7 +49,7 @@
             this.richTextBoxDeck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxDeck.Location = new System.Drawing.Point(320, 45);
             this.richTextBoxDeck.Name = "richTextBoxDeck";
-            this.richTextBoxDeck.Size = new System.Drawing.Size(298, 451);
+            this.richTextBoxDeck.Size = new System.Drawing.Size(298, 435);
             this.richTextBoxDeck.TabIndex = 0;
             this.richTextBoxDeck.Text = "";
             // 
@@ -158,11 +159,21 @@
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
+            // labelTotalCards
+            // 
+            this.labelCardCount.AutoSize = true;
+            this.labelCardCount.Location = new System.Drawing.Point(539, 487);
+            this.labelCardCount.Name = "labelTotalCards";
+            this.labelCardCount.Size = new System.Drawing.Size(79, 13);
+            this.labelCardCount.TabIndex = 11;
+            this.labelCardCount.Text = "Card Count NN";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 505);
+            this.Controls.Add(this.labelCardCount);
             this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.buttonView);
             this.Controls.Add(this.buttonDecklist);
@@ -198,6 +209,7 @@
         private System.Windows.Forms.Button buttonDecklist;
         private System.Windows.Forms.Button buttonView;
         private System.Windows.Forms.Button buttonAbout;
+        private System.Windows.Forms.Label labelCardCount;
     }
 }
 
