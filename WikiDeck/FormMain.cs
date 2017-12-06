@@ -133,30 +133,8 @@ namespace WikiDeck
         private async void buttonUpload_Click(object sender, EventArgs e)
         {
             ValidateDeckResult valid = ValidateDeck();
-            if ((valid & ValidateDeckResult.BadFormat) != 0)
-            {
-                ShowMessage("The deck contains entries with an invalid format (shown in red). Please correct them before uploading.");
+            if (!ShouldContinueWithUpload(valid))
                 return;
-            }
-            else if (valid != ValidateDeckResult.Valid)
-            {
-                StringBuilder msg = new StringBuilder("The deck contains the following error");
-                if ((valid & (valid - 1)) != 0)
-                    msg.Append("s");
-                msg.Append(".\n\n");
-                if ((valid & ValidateDeckResult.ContainsDuplicates) != 0)
-                    msg.Append("Duplicates; ");
-                if ((valid & ValidateDeckResult.UnknownCard) != 0)
-                    msg.Append("Unknown cards; ");
-                if ((valid & ValidateDeckResult.MaxInHandExceeded) != 0)
-                    msg.Append("Invalid amounts; ");
-                if ((valid & ValidateDeckResult.LessThan60Cards) != 0)
-                    msg.Append("Less than 60 cards; ");
-                msg.Remove(msg.Length - 2, 2);
-                msg.Append(". \n\nContinue with upload?");
-                if (ShowMessage(msg.ToString(), MessageButtons.ContinueCancel) != DialogResult.OK)
-                    return;
-            }
             UpdateUI(true);
             _deck.Cards = richTextBoxDeck.Text;
             try
@@ -179,6 +157,40 @@ namespace WikiDeck
                 ShowMessage("Upload failed due to a network error.");
             }
             UpdateUI(false);
+        }
+
+        private bool ShouldContinueWithUpload(ValidateDeckResult valid)
+        {
+            if ((valid & ValidateDeckResult.BadFormat) != 0)
+            {
+                ShowMessage("The deck contains entries with an invalid format (shown in red). Please correct them before uploading.");
+                return false;
+            }
+            else if (valid != ValidateDeckResult.Valid)
+            {
+                if (ShowMessage(ContinueUploadMessage(valid), MessageButtons.ContinueCancel) != DialogResult.OK)
+                    return false;
+            }
+            return true;
+        }
+
+        private static string ContinueUploadMessage(ValidateDeckResult valid)
+        {
+            StringBuilder msg = new StringBuilder("The deck contains the following error");
+            if ((valid & (valid - 1)) != 0)
+                msg.Append("s");
+            msg.Append(".\n\n");
+            if ((valid & ValidateDeckResult.ContainsDuplicates) != 0)
+                msg.Append("Duplicates; ");
+            if ((valid & ValidateDeckResult.UnknownCard) != 0)
+                msg.Append("Unknown cards; ");
+            if ((valid & ValidateDeckResult.MaxInHandExceeded) != 0)
+                msg.Append("Invalid amounts; ");
+            if ((valid & ValidateDeckResult.LessThan60Cards) != 0)
+                msg.Append("Less than 60 cards; ");
+            msg.Remove(msg.Length - 2, 2);
+            msg.Append(". \n\nContinue with upload?");
+            return msg.ToString();
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -293,6 +305,7 @@ namespace WikiDeck
             ShowMessage("You have been blocked from editing wiki pages.");
             Application.Exit();
         }
+
     }
 }
 
