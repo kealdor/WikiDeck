@@ -105,6 +105,7 @@
             this.MinimizeBox = false;
             this.Name = "FormColorLegend";
             this.Text = "Validation Colors";
+            this.Load += new System.EventHandler(this.FormColorLegend_Load);
             this.ResumeLayout(false);
 
         }
