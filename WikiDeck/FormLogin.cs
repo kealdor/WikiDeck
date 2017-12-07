@@ -14,14 +14,13 @@ namespace WikiDeck
 
         private List<SiteInfo> _sites = new List<SiteInfo>()
         {
-            new SiteInfo { Name = "Magic Duels", Url = "http://magicduels.wikia.com", CardDataFileName = "DuelsCards.json" },
-            new SiteInfo { Name = "Magic Arena", Url = "http://magicarena.wikia.com", CardDataFileName = "ArenaCards.json" },
+            new SiteInfo("Magic Duels", "http://magicduels.wikia.com", "DuelsCards.json", true),
+            new SiteInfo("Magic Arena", "http://magicarena.wikia.com", "ArenaCards.json", false),
         };
 
         public WikiaClient Client { get; private set; }
         public string UserName { get; private set; }
-        public string CardDataFileName { get; private set; }
-        public string WikiName { get; set; }
+        public SiteInfo Site { get; set; }
 
         public FormLogin()
         {
@@ -50,8 +49,7 @@ namespace WikiDeck
                 SaveDetails();
                 DialogResult = DialogResult.OK;
                 UserName = textBoxUsername.Text;
-                CardDataFileName = site.CardDataFileName;
-                WikiName = site.Name;
+                Site = site;
                 Close();
             }
             else

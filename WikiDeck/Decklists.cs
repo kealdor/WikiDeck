@@ -20,7 +20,7 @@ namespace WikiDeck
         public async Task<DecklistsEntry> GetEntryAsync(string pageTitle)
         {
             await _page.LoadAsync();
-            Match match = Regex.Match(_page.Content, @"{{DecklistRow\s*\|link\s*=\s*" + pageTitle, RegexOptions.Singleline);
+            Match match = Regex.Match(_page.Content, @"{{DecklistRow\s*\|link\s*=\s*" + Regex.Escape(pageTitle), RegexOptions.Singleline);
             if (!match.Success)
                 return null;
             string entryText = ExtractEntry(_page.Content, match.Index);

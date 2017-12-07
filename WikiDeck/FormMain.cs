@@ -28,6 +28,7 @@ namespace WikiDeck
         private string _deckPrefix;
         private string _deckListsPageName;
         private string _userName;
+        private bool _useRarityForMaxInHand;
         private FormColorLegend _colorLegend;
 
         public FormMain(string deckPrefix, string deckListsPageName)
@@ -119,7 +120,7 @@ namespace WikiDeck
                     continue;
                 }
 
-                if (amount > card.MaxInHand)
+                if (amount > (_useRarityForMaxInHand ? card.MaxInHandFromRarity : card.MaxInHand))
                 {
                     richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.MaxInHandExceeded].Color);
                     richTextBoxDeck.AppendText("\n");
@@ -225,7 +226,8 @@ namespace WikiDeck
                 System.Media.SystemSounds.Asterisk.Play();
                 return;
             }
-            richTextBoxDeck.AppendText(card.InitialAmount.ToString() + " " + cardName + "\n");
+            int amount = _useRarityForMaxInHand ? card.InitialAmountFromRarity : card.InitialAmount;
+            richTextBoxDeck.AppendText(amount.ToString() + " " + cardName + "\n");
             ValidateDeck();
         }
 
@@ -242,10 +244,11 @@ namespace WikiDeck
             {
                 _client = dlg.Client;
                 _userName = dlg.UserName;
-                _cards = new Cards(dlg.CardDataFileName);
+                _cards = new Cards(dlg.Site.CardDataFileName);
                 _decks = new Decks(_deckPrefix, _client);
+                _useRarityForMaxInHand = dlg.Site.UseRarityForMaxInHand;
                 listBoxCardList.DataSource = _cards.GetAll();
-                Text = Text + " - " + dlg.WikiName;
+                Text = Text + " - " + dlg.Site.Name;
             }
             else
             {

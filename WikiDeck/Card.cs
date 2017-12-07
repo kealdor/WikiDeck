@@ -79,14 +79,34 @@ namespace WikiDeck
 
         public bool IsLand => Types.Contains("Land");
 
-        public int MaxInHand => rarityToMaxInHandMap[Rarity];
+        public int MaxInHandFromRarity => rarityToMaxInHandMap[Rarity];
+
+        public int MaxInHand
+        {
+            get
+            {
+                if (Rarity == "Basic Land")
+                    return int.MaxValue;
+                return 4;
+            }
+        }
+
+        public int InitialAmountFromRarity
+        {
+            get
+            {
+                int max = MaxInHandFromRarity;
+                return (max > 4) ? 6 : max;
+            }
+        }
 
         public int InitialAmount
         {
             get
             {
-                int max = MaxInHand;
-                return (max > 4) ? 6 : max;
+                if (Rarity == "Basic Land")
+                    return 6;
+                return 4;
             }
         }
     }
