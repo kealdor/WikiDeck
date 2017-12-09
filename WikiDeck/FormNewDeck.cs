@@ -65,13 +65,37 @@ namespace WikiDeck
                 buttonOK.Enabled = false;
                 return;
             }
-            if (text.StartsWith(" "))
+            if (char.IsLower(text[0]))
+            {
+                int pos = textBoxDeckName.SelectionStart;
+                textBoxDeckName.Text = char.ToUpper(text[0]) + text.Substring(1);
+                textBoxDeckName.SelectionStart = pos;
+            }
+            if (!DeckNames.IsValidLength(text))
             {
                 buttonOK.Enabled = false;
-                SetStatus("Deck name cannot start with a space", true);
+                SetStatus("Deck name is too long.", true);
                 return;
             }
-            string badChars = DeckNames.ValidateCharacters(text);
+            if (DeckNames.HasInvalidTerminators(text))
+            {
+                buttonOK.Enabled = false;
+                SetStatus("Deck names cannot start/end with a space or underscore.", true);
+                return;
+            }
+            if (DeckNames.HasTwoConsecutiveSpaces(text))
+            {
+                buttonOK.Enabled = false;
+                SetStatus("Deck names cannot contain two consecutive spaces or underscores.", true);
+                return;
+            }
+            if (DeckNames.IsInvalidPath(text))
+            {
+                buttonOK.Enabled = false;
+                SetStatus("Deck name must not be \".\" or \"..\"", true);
+                return;
+            }
+            string badChars = DeckNames.GetInvalidCharacters(text);
             if (badChars != "")
             {
                 buttonOK.Enabled = false;
