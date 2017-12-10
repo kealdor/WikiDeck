@@ -86,8 +86,18 @@ namespace WikiDeck
             IEnumerable<Card> result = _cards;
 
             List<string> colors = GetColorList();
-            if (colors.Count > 0)
-                result = result.Where(x => x.Colors != null && (x.Colors.Intersect(colors).Any()));
+            if (checkBoxColorless.Checked)
+            {
+                if (colors.Count > 0)
+                    result = result.Where(x => x.Colors == null || x.Colors.Intersect(colors).Any());
+                else
+                    result = result.Where(x => x.Colors == null);
+            }
+            else
+            {
+                if (colors.Count > 0)
+                    result = result.Where(x => x.Colors != null && (x.Colors.Intersect(colors).Any()));
+            }
 
             List<string> types = GetTypesList();
             if (types.Count > 0)
