@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WikiaClientLibrary;
+using System.Linq;
 
 namespace WikiDeck
 {
@@ -22,7 +23,8 @@ namespace WikiDeck
         };
 
         private WikiaClient _client;
-        private Cards _cards;
+        private List<Card> _cards;
+        private IEnumerable<Card> _filteredCards;
         private Decks _decks;
         private Deck _deck;
         private string _deckPrefix;
@@ -38,6 +40,7 @@ namespace WikiDeck
             _deckPrefix = deckPrefix;
             _deckListsPageName = deckListsPageName;
             _colorLegend = null;
+            listBoxCardList.DisplayMember = "Name";
             SetCardCountText(0);
         }
 
@@ -215,26 +218,24 @@ namespace WikiDeck
         private void UpdateCardList()
         {
             string text = textBoxSearch.Text;
-            List<Card> matches;
             if (string.IsNullOrEmpty(text))
-                listBoxCardList.DataSource = _cards.GetAll();
+                listBoxCardList.DataSource = _filteredCards.ToList();
             else
-                listBoxCardList.DataSource = _cards.GetFuzzyMatches(text);
+                listBoxCardList.DataSource = _filteredCards.FuzzyMatch(text);
         }
 
         private void listBoxCardList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (_deck == null)
                 return;
-            string cardName = (string)((ListBox)sender).SelectedItem;
-            Card card = _cards.GetByName(cardName);
+            Card card = (Card)((ListBox)sender).SelectedItem;
             if (richTextBoxDeck.Text.IndexOf(card.Name, StringComparison.InvariantCultureIgnoreCase) != -1)
             {
                 System.Media.SystemSounds.Asterisk.Play();
                 return;
             }
             int amount = _useRarityForMaxInHand ? card.InitialAmountFromRarity : card.InitialAmount;
-            richTextBoxDeck.AppendText(amount.ToString() + " " + cardName + "\n");
+            richTextBoxDeck.AppendText(amount.ToString() + " " + card.Name + "\n");
             ValidateDeck();
         }
 
@@ -251,11 +252,13 @@ namespace WikiDeck
             {
                 _client = dlg.Client;
                 _userName = dlg.UserName;
-                _cards = new Cards(dlg.Site.CardDataFileName);
+                _cards = new List<Card>();
+                _cards.Load(dlg.Site.CardDataFileName);
+                _filteredCards = _cards;
                 _decks = new Decks(_deckPrefix, _client);
                 _useRarityForMaxInHand = dlg.Site.UseRarityForMaxInHand;
-                listBoxCardList.DataSource = _cards.GetAll();
                 Text = Text + " - " + dlg.Site.Name;
+                UpdateCardList();
             }
             else
             {
@@ -347,10 +350,21 @@ namespace WikiDeck
         {
             if (_cardFilter == null)
             {
-                _cardFilter = new FormCardFilter();
+                _cardFilter = new FormCardFilter(_cards);
                 _cardFilter.FormClosed += CardFilter_FormClosed;
+                _cardFilter.FilterChanged += CardFilter_FilterChanged;
                 _cardFilter.Show(this);
             }
+            else
+            {
+                _cardFilter.Activate();
+            }
+        }
+
+        private void CardFilter_FilterChanged(object sender, FilterChangesEventArgs e)
+        {
+            _filteredCards = e.Cards;
+            UpdateCardList();
         }
 
         private void CardFilter_FormClosed(object sender, FormClosedEventArgs e)

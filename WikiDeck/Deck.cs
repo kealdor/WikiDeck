@@ -23,7 +23,7 @@ namespace WikiDeck
             _deckName = deckName;
         }
 
-        public List<string> GetSets(Cards cards)
+        public List<string> GetSets(IEnumerable<Card> cards)
         {
             List<string> sets = new List<string>();
             string[] names = Cards.Split(newLine);
@@ -43,7 +43,7 @@ namespace WikiDeck
             return sets;
         }
 
-        public List<string> GetColors(Cards cards)
+        public List<string> GetColors(IEnumerable<Card> cards)
         {
             List<string> colors = new List<string>();
             string[] names = Cards.Split(newLine);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
@@ -14,10 +15,10 @@ namespace WikiDeck
         private Decklists _decklists;
         private Deck _deck;
         private DecklistsEntry _entry;
-        private Cards _cards;
+        private IEnumerable<Card> _cards;
         private string _userName;
 
-        public FormDecklists(WikiaClient client, Deck deck, Cards cards, string decklistsPageTitle, string userName)
+        public FormDecklists(WikiaClient client, Deck deck, IEnumerable<Card> cards, string decklistsPageTitle, string userName)
         {
             InitializeComponent();
             _client = client;

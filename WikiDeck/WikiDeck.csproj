@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AppVersion.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardListExtentions.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="ColorInfo.cs" />
     <Compile Include="Deck.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="DecklistsEntry.cs" />
     <Compile Include="Decks.cs" />
     <Compile Include="Encryption.cs" />
+    <Compile Include="FilterChangesEventArgs.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +119,7 @@
     </Compile>
     <Compile Include="DecklistsException.cs" />
     <Compile Include="MessageButtons.cs" />
+    <Compile Include="PredicateBuilder.cs" />
     <Compile Include="RarityInfo.cs" />
     <Compile Include="RichTextBoxExtensions.cs" />
     <Compile Include="FormMain.cs">

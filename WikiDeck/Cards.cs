@@ -6,37 +6,36 @@ using System.IO;
 
 namespace WikiDeck
 {
-    public class Cards
+    public class Cards : List<Card>
     {
-        private List<Card> _cards;
-
         public Cards(string dataFileName)
         {
-            _cards = GetData(dataFileName);
+            GetData(dataFileName);
         }
 
         public Card GetByName(string cardName)
         {
             string lowerCaseName = cardName.ToLowerInvariant();
-            return _cards.Where(x => x.LowerCaseName == lowerCaseName).FirstOrDefault();
+            return this.Where(x => x.LowerCaseName == lowerCaseName).FirstOrDefault();
         }
 
         public List<string> GetAll()
         {
-            return _cards.Select(x => x.Name).OrderBy(x => x).ToList();
+            return this.Select(x => x.Name).OrderBy(x => x).ToList();
         }
 
         public List<string> GetFuzzyMatches(string match)
         {
             char[] chars = match.ToCharArray();
-            var results = _cards.Where(x => Fuzzy(x.LowerCaseName, chars)).OrderBy(x => Weight(x.LowerCaseName, match)).Select(x => x.Name);
+            var results = this.Where(x => Fuzzy(x.LowerCaseName, chars)).OrderBy(x => Weight(x.LowerCaseName, match)).Select(x => x.Name);
             return results.ToList();
         }
 
-        private List<Card> GetData(string dataFileName)
+        private void GetData(string dataFileName)
         {
             string json = File.ReadAllText(dataFileName);
-            return JsonConvert.DeserializeObject<List<Card>>(json);
+            List<Card> cards = JsonConvert.DeserializeObject<List<Card>>(json);
+            this.AddRange(cards);
         }
 
         private static int Weight(string s, string match)
