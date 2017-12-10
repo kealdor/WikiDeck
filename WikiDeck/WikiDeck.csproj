@@ -55,7 +55,6 @@
     <Compile Include="AppVersion.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardListExtentions.cs" />
-    <Compile Include="Cards.cs" />
     <Compile Include="ColorInfo.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Decklists.cs" />
@@ -131,6 +130,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ruling.cs" />
+    <Compile Include="SetInfo.cs" />
+    <Compile Include="Sets.cs" />
     <Compile Include="SiteInfo.cs" />
     <Compile Include="ValidateDeckResult.cs" />
     <Compile Include="DeckNames.cs" />

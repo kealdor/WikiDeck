@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace WikiDeck
 {
@@ -39,7 +40,8 @@ namespace WikiDeck
 
         public string Text { get; set; }
 
-        [JsonProperty("cmc")]
+        [DefaultValue(-1)]
+        [JsonProperty("cmc", DefaultValueHandling = DefaultValueHandling.Populate)]
         public int Cmc { get; set; }
 
         [JsonProperty(Required = Required.Always)]

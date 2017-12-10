@@ -14,11 +14,15 @@ namespace WikiDeck
     {
         private IEnumerable<Card> _cards;
 
-        public FormCardFilter(IEnumerable<Card> cards)
+        public FormCardFilter(IEnumerable<Card> cards, Sets sets)
         {
             InitializeComponent();
             _cards = cards;
+            listBoxSets.DataSource = sets;
+            listBoxSets.DisplayMember = "Name";
+            listBoxSets.SelectedItem = null;
             WireEvents();
+            UpdateUI();
         }
 
         private void WireEvents()
@@ -27,6 +31,7 @@ namespace WikiDeck
                 ((CheckBox)control).CheckedChanged += FilterCriteriaChanged;
             foreach (Control control in flowLayoutPanelTypes.Controls)
                 ((CheckBox)control).CheckedChanged += FilterCriteriaChanged;
+            listBoxSets.SelectedIndexChanged += FilterCriteriaChanged;
         }
 
         private void FormCardFilter_Load(object sender, EventArgs e)
@@ -34,7 +39,7 @@ namespace WikiDeck
             if (Owner == null)
                 return;
             Point startLocation = Owner.Location;
-            startLocation.Offset(-Width, 80);
+            startLocation.Offset(-Width, 70);
             if (startLocation.X < 0)
                 startLocation.X = 0;
             Location = startLocation;
@@ -53,6 +58,13 @@ namespace WikiDeck
             return list;
         }
 
+        private void UpdateUI()
+        {
+            bool cmcChecked = checkBoxUseCmc.Checked;
+            numericUpDownCmcMin.Enabled = cmcChecked;
+            numericUpDownCmcMax.Enabled = cmcChecked;
+        }
+
         private List<string> GetColorList()
         {
             return GetCheckboxTagList(flowLayoutPanelColors);
@@ -61,34 +73,6 @@ namespace WikiDeck
         private List<string> GetTypesList()
         {
             return GetCheckboxTagList(flowLayoutPanelTypes);
-        }
-
-        void GetFilter()
-        {
-            Cards cards = new Cards("DuelsCards.json");
-
-            var filter = cards.Where(x => x.Colors != null && (x.Colors.Contains("Red") || x.Colors.Contains("Green")));
-
-            var result = filter.ToList();
-
-            int a = 1;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Cards cards = new Cards("DuelsCards.json");
-
-            List<string> colors = GetColorList();
-
-            var filter = cards.Where(x => x.Colors != null && (x.Colors.Contains("Red") || x.Colors.Contains("Green")));
-
-            var filter2 = cards.Where(x => x.Colors != null && (x.Colors.Intersect(colors).Any()));
-
-            var result = filter.ToList();
-
-            var result2 = filter2.ToList();
-
-            int a = 1;
         }
 
         private void FilterCriteriaChanged(object sender, EventArgs e)
@@ -109,6 +93,33 @@ namespace WikiDeck
             if (types.Count > 0)
                 result = result.Where(x => x.Types.Intersect(types).Any());
 
+            if (checkBoxUseCmc.Checked)
+            {
+                int max = (int)numericUpDownCmcMax.Value;
+                int min = (int)numericUpDownCmcMin.Value;
+                if (max == min)
+                {
+                    result = result.Where(x => x.Cmc == min);
+                }
+                else
+                {
+                    result = result.Where(x => x.Cmc >= min && x.Cmc <= max);
+                }
+            }
+
+            if (listBoxSets.SelectedItems.Count == 1)
+            {
+                string setCode = ((SetInfo)listBoxSets.SelectedItems[0]).Code;
+                result = result.Where(x => x.SetCode == setCode);
+            }
+            else if (listBoxSets.SelectedItems.Count > 1)
+            {
+                List<string> setCodes = new List<string>();
+                foreach (object set in listBoxSets.SelectedItems)
+                    setCodes.Add(((SetInfo)set).Code);
+                result = result.Where(x => setCodes.Contains(x.SetCode));
+            }
+
             return result;
         }
 
@@ -117,6 +128,26 @@ namespace WikiDeck
         {
             var handler = FilterChanged;
             handler?.Invoke(this, new FilterChangesEventArgs(filteredCards));
+        }
+
+        private void checkBoxUseCmc_CheckStateChanged(object sender, EventArgs e)
+        {
+            UpdateUI();
+            FilterCriteriaChanged(sender, e);
+        }
+
+        private void numericUpDownCmcMin_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDownCmcMax.Value < numericUpDownCmcMin.Value)
+                numericUpDownCmcMax.Value = numericUpDownCmcMin.Value;
+            FilterCriteriaChanged(sender, e);
+        }
+
+        private void numericUpDownCmcMax_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDownCmcMin.Value > numericUpDownCmcMax.Value)
+                numericUpDownCmcMin.Value = numericUpDownCmcMax.Value;
+            FilterCriteriaChanged(sender, e);
         }
     }
 }
