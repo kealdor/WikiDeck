@@ -73,6 +73,12 @@
     <Compile Include="FormCard.Designer.cs">
       <DependentUpon>FormCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCardFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCardFilter.Designer.cs">
+      <DependentUpon>FormCardFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChooseDeck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     <EmbeddedResource Include="FormCard.resx">
       <DependentUpon>FormCard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCardFilter.resx">
+      <DependentUpon>FormCardFilter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChooseDeck.resx">
       <DependentUpon>FormChooseDeck.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,6 +169,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="ArenaCards.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -186,6 +196,24 @@
       <Project>{955dfa07-f730-4ab2-992d-3ca920df2a3a}</Project>
       <Name>WikiaClientLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Color_U.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Color_W.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Color_B.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Color_G.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Color_R.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mana_C.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

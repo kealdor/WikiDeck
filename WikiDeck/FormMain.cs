@@ -30,6 +30,7 @@ namespace WikiDeck
         private string _userName;
         private bool _useRarityForMaxInHand;
         private FormColorLegend _colorLegend;
+        private FormCardFilter _cardFilter;
 
         public FormMain(string deckPrefix, string deckListsPageName)
         {
@@ -208,7 +209,13 @@ namespace WikiDeck
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            string text = ((TextBox)sender).Text;
+            UpdateCardList();
+        }
+
+        private void UpdateCardList()
+        {
+            string text = textBoxSearch.Text;
+            List<Card> matches;
             if (string.IsNullOrEmpty(text))
                 listBoxCardList.DataSource = _cards.GetAll();
             else
@@ -334,6 +341,21 @@ namespace WikiDeck
         private void ColorLegend_FormClosed(object sender, FormClosedEventArgs e)
         {
             _colorLegend = null;
+        }
+
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            if (_cardFilter == null)
+            {
+                _cardFilter = new FormCardFilter();
+                _cardFilter.FormClosed += CardFilter_FormClosed;
+                _cardFilter.Show(this);
+            }
+        }
+
+        private void CardFilter_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _cardFilter = null;
         }
     }
 }

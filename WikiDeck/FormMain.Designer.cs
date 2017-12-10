@@ -41,6 +41,7 @@
             this.buttonAbout = new System.Windows.Forms.Button();
             this.labelCardCount = new System.Windows.Forms.Label();
             this.linkLabelColorLegend = new System.Windows.Forms.LinkLabel();
+            this.buttonFilter = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // richTextBoxDeck
@@ -101,7 +102,7 @@
             // 
             this.textBoxSearch.Location = new System.Drawing.Point(13, 43);
             this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(301, 20);
+            this.textBoxSearch.Size = new System.Drawing.Size(238, 20);
             this.textBoxSearch.TabIndex = 5;
             this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
@@ -182,11 +183,22 @@
             this.linkLabelColorLegend.Text = "Validation colors";
             this.linkLabelColorLegend.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelColorLegend_LinkClicked);
             // 
+            // buttonFilter
+            // 
+            this.buttonFilter.Location = new System.Drawing.Point(258, 41);
+            this.buttonFilter.Name = "buttonFilter";
+            this.buttonFilter.Size = new System.Drawing.Size(56, 20);
+            this.buttonFilter.TabIndex = 13;
+            this.buttonFilter.Text = "More";
+            this.buttonFilter.UseVisualStyleBackColor = true;
+            this.buttonFilter.Click += new System.EventHandler(this.buttonFilter_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 505);
+            this.Controls.Add(this.buttonFilter);
             this.Controls.Add(this.linkLabelColorLegend);
             this.Controls.Add(this.labelCardCount);
             this.Controls.Add(this.buttonAbout);
@@ -226,6 +238,7 @@
         private System.Windows.Forms.Button buttonAbout;
         private System.Windows.Forms.Label labelCardCount;
         private System.Windows.Forms.LinkLabel linkLabelColorLegend;
+        private System.Windows.Forms.Button buttonFilter;
     }
 }
 
