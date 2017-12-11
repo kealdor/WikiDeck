@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -25,6 +26,21 @@ namespace WikiDeck
             if (attributes.Length == 0)
                 return "";
             return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+        }
+
+        private void linkLabelDuels_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://magicduels.wikia.com");
+        }
+
+        private void linkLabelArena_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://magicarena.wikia.com");
+        }
+
+        private void linkLabelSource_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/Aspallar/WikiDeck");
         }
     }
 }

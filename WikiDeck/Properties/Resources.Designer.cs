@@ -63,6 +63,16 @@ namespace WikiDeck.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cardback {
+            get {
+                object obj = ResourceManager.GetObject("Cardback", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CMC0 {
             get {
                 object obj = ResourceManager.GetObject("CMC0", resourceCulture);
