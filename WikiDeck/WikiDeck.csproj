@@ -117,6 +117,7 @@
       <DependentUpon>FormNewDeck.cs</DependentUpon>
     </Compile>
     <Compile Include="DecklistsException.cs" />
+    <Compile Include="ManaImages.cs" />
     <Compile Include="MessageButtons.cs" />
     <Compile Include="PredicateBuilder.cs" />
     <Compile Include="RarityInfo.cs" />
@@ -218,6 +219,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Mana_C.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMCX.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC3.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC4.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC5.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC6.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC7.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC8.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC10.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CMC0.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

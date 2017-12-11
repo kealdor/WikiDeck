@@ -42,6 +42,7 @@
             this.labelCardCount = new System.Windows.Forms.Label();
             this.linkLabelColorLegend = new System.Windows.Forms.LinkLabel();
             this.buttonFilter = new System.Windows.Forms.Button();
+            this.buttonCard = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // richTextBoxDeck
@@ -115,6 +116,7 @@
             this.listBoxCardList.Name = "listBoxCardList";
             this.listBoxCardList.Size = new System.Drawing.Size(301, 342);
             this.listBoxCardList.TabIndex = 6;
+            this.listBoxCardList.SelectedIndexChanged += new System.EventHandler(this.listBoxCardList_SelectedIndexChanged);
             this.listBoxCardList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxCardList_MouseDoubleClick);
             // 
             // buttonNew
@@ -153,7 +155,7 @@
             // buttonAbout
             // 
             this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonAbout.Location = new System.Drawing.Point(13, 477);
+            this.buttonAbout.Location = new System.Drawing.Point(93, 477);
             this.buttonAbout.Name = "buttonAbout";
             this.buttonAbout.Size = new System.Drawing.Size(75, 23);
             this.buttonAbout.TabIndex = 10;
@@ -193,11 +195,23 @@
             this.buttonFilter.UseVisualStyleBackColor = true;
             this.buttonFilter.Click += new System.EventHandler(this.buttonFilter_Click);
             // 
+            // buttonCard
+            // 
+            this.buttonCard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCard.Location = new System.Drawing.Point(13, 477);
+            this.buttonCard.Name = "buttonCard";
+            this.buttonCard.Size = new System.Drawing.Size(75, 23);
+            this.buttonCard.TabIndex = 14;
+            this.buttonCard.Text = "Card...";
+            this.buttonCard.UseVisualStyleBackColor = true;
+            this.buttonCard.Click += new System.EventHandler(this.buttonCard_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 505);
+            this.Controls.Add(this.buttonCard);
             this.Controls.Add(this.buttonFilter);
             this.Controls.Add(this.linkLabelColorLegend);
             this.Controls.Add(this.labelCardCount);
@@ -239,6 +253,7 @@
         private System.Windows.Forms.Label labelCardCount;
         private System.Windows.Forms.LinkLabel linkLabelColorLegend;
         private System.Windows.Forms.Button buttonFilter;
+        private System.Windows.Forms.Button buttonCard;
     }
 }
 

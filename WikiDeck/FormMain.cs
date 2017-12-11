@@ -33,6 +33,7 @@ namespace WikiDeck
         private bool _useRarityForMaxInHand;
         private FormColorLegend _colorLegend;
         private FormCardFilter _cardFilter;
+        private FormCard _cardView;
         private Sets _sets;
 
         public FormMain(string deckPrefix, string deckListsPageName)
@@ -375,6 +376,32 @@ namespace WikiDeck
             _filteredCards = _cards;
             UpdateCardList();
         }
+
+        private void buttonCard_Click(object sender, EventArgs e)
+        {
+            if (_cardView == null)
+            {
+                _cardView = new FormCard();
+                _cardView.FormClosed += CardView_FormClosed;
+                if (listBoxCardList.SelectedItem != null)
+                    _cardView.Card = (Card)listBoxCardList.SelectedItem;
+                _cardView.Show(this);
+            }
+            else
+            {
+                _cardView.Activate();
+            }
+        }
+
+        private void CardView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _cardView = null;
+        }
+
+        private void listBoxCardList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_cardView != null && listBoxCardList.SelectedItem != null)
+                _cardView.Card = (Card)listBoxCardList.SelectedItem;
+        }
     }
 }
-
