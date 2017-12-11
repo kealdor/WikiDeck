@@ -51,6 +51,8 @@
             this.numericUpDownCmcMin = new System.Windows.Forms.NumericUpDown();
             this.checkBoxUseCmc = new System.Windows.Forms.CheckBox();
             this.listBoxSets = new System.Windows.Forms.ListBox();
+            this.checkBoxEnchantment = new System.Windows.Forms.CheckBox();
+            this.checkBoxPlaneswalker = new System.Windows.Forms.CheckBox();
             groupBoxColors = new System.Windows.Forms.GroupBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -69,7 +71,7 @@
             groupBoxColors.Controls.Add(this.flowLayoutPanelColors);
             groupBoxColors.Location = new System.Drawing.Point(12, 13);
             groupBoxColors.Name = "groupBoxColors";
-            groupBoxColors.Size = new System.Drawing.Size(60, 196);
+            groupBoxColors.Size = new System.Drawing.Size(60, 207);
             groupBoxColors.TabIndex = 1;
             groupBoxColors.TabStop = false;
             groupBoxColors.Text = "Colors";
@@ -150,7 +152,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(6, 38);
+            label1.Location = new System.Drawing.Point(25, 40);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(24, 13);
             label1.TabIndex = 2;
@@ -160,19 +162,28 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(74, 38);
+            label2.Location = new System.Drawing.Point(93, 40);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(27, 13);
             label2.TabIndex = 3;
             label2.Text = "Max";
             label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(13, 304);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(28, 13);
+            label3.TabIndex = 5;
+            label3.Text = "Sets";
+            // 
             // groupBoxType
             // 
             this.groupBoxType.Controls.Add(this.flowLayoutPanelTypes);
             this.groupBoxType.Location = new System.Drawing.Point(79, 13);
             this.groupBoxType.Name = "groupBoxType";
-            this.groupBoxType.Size = new System.Drawing.Size(87, 188);
+            this.groupBoxType.Size = new System.Drawing.Size(111, 207);
             this.groupBoxType.TabIndex = 2;
             this.groupBoxType.TabStop = false;
             this.groupBoxType.Text = "Types";
@@ -184,9 +195,11 @@
             this.flowLayoutPanelTypes.Controls.Add(this.checkBoxSorcery);
             this.flowLayoutPanelTypes.Controls.Add(this.checkBoxInstant);
             this.flowLayoutPanelTypes.Controls.Add(this.checkBoxArtifact);
+            this.flowLayoutPanelTypes.Controls.Add(this.checkBoxEnchantment);
+            this.flowLayoutPanelTypes.Controls.Add(this.checkBoxPlaneswalker);
             this.flowLayoutPanelTypes.Location = new System.Drawing.Point(7, 16);
             this.flowLayoutPanelTypes.Name = "flowLayoutPanelTypes";
-            this.flowLayoutPanelTypes.Size = new System.Drawing.Size(74, 166);
+            this.flowLayoutPanelTypes.Size = new System.Drawing.Size(95, 191);
             this.flowLayoutPanelTypes.TabIndex = 0;
             this.flowLayoutPanelTypes.Tag = "Land";
             // 
@@ -247,15 +260,15 @@
             this.groupBoxCmc.Controls.Add(label1);
             this.groupBoxCmc.Controls.Add(this.numericUpDownCmcMin);
             this.groupBoxCmc.Controls.Add(this.checkBoxUseCmc);
-            this.groupBoxCmc.Location = new System.Drawing.Point(18, 207);
+            this.groupBoxCmc.Location = new System.Drawing.Point(13, 228);
             this.groupBoxCmc.Name = "groupBoxCmc";
-            this.groupBoxCmc.Size = new System.Drawing.Size(142, 63);
+            this.groupBoxCmc.Size = new System.Drawing.Size(168, 63);
             this.groupBoxCmc.TabIndex = 3;
             this.groupBoxCmc.TabStop = false;
             // 
             // numericUpDownCmcMax
             // 
-            this.numericUpDownCmcMax.Location = new System.Drawing.Point(100, 35);
+            this.numericUpDownCmcMax.Location = new System.Drawing.Point(119, 37);
             this.numericUpDownCmcMax.Name = "numericUpDownCmcMax";
             this.numericUpDownCmcMax.Size = new System.Drawing.Size(36, 20);
             this.numericUpDownCmcMax.TabIndex = 4;
@@ -263,7 +276,7 @@
             // 
             // numericUpDownCmcMin
             // 
-            this.numericUpDownCmcMin.Location = new System.Drawing.Point(29, 35);
+            this.numericUpDownCmcMin.Location = new System.Drawing.Point(48, 37);
             this.numericUpDownCmcMin.Name = "numericUpDownCmcMin";
             this.numericUpDownCmcMin.Size = new System.Drawing.Size(36, 20);
             this.numericUpDownCmcMin.TabIndex = 1;
@@ -286,26 +299,37 @@
             this.listBoxSets.Items.AddRange(new object[] {
             "Shadows Over Innistrad",
             "Oath of the Gatewatch"});
-            this.listBoxSets.Location = new System.Drawing.Point(18, 302);
+            this.listBoxSets.Location = new System.Drawing.Point(13, 323);
             this.listBoxSets.Name = "listBoxSets";
             this.listBoxSets.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxSets.Size = new System.Drawing.Size(142, 121);
+            this.listBoxSets.Size = new System.Drawing.Size(168, 121);
             this.listBoxSets.TabIndex = 4;
             // 
-            // label3
+            // checkBoxEnchantment
             // 
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(18, 283);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(28, 13);
-            label3.TabIndex = 5;
-            label3.Text = "Sets";
+            this.checkBoxEnchantment.Location = new System.Drawing.Point(3, 143);
+            this.checkBoxEnchantment.Name = "checkBoxEnchantment";
+            this.checkBoxEnchantment.Size = new System.Drawing.Size(92, 22);
+            this.checkBoxEnchantment.TabIndex = 5;
+            this.checkBoxEnchantment.Tag = "Enchantment";
+            this.checkBoxEnchantment.Text = "Enchantment";
+            this.checkBoxEnchantment.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPlaneswalker
+            // 
+            this.checkBoxPlaneswalker.Location = new System.Drawing.Point(3, 171);
+            this.checkBoxPlaneswalker.Name = "checkBoxPlaneswalker";
+            this.checkBoxPlaneswalker.Size = new System.Drawing.Size(92, 22);
+            this.checkBoxPlaneswalker.TabIndex = 6;
+            this.checkBoxPlaneswalker.Tag = "Planeswalker";
+            this.checkBoxPlaneswalker.Text = "Planeswalker";
+            this.checkBoxPlaneswalker.UseVisualStyleBackColor = true;
             // 
             // FormCardFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(175, 435);
+            this.ClientSize = new System.Drawing.Size(193, 457);
             this.Controls.Add(label3);
             this.Controls.Add(this.listBoxSets);
             this.Controls.Add(this.groupBoxCmc);
@@ -351,5 +375,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCmcMax;
         private System.Windows.Forms.NumericUpDown numericUpDownCmcMin;
         private System.Windows.Forms.ListBox listBoxSets;
+        private System.Windows.Forms.CheckBox checkBoxEnchantment;
+        private System.Windows.Forms.CheckBox checkBoxPlaneswalker;
     }
 }

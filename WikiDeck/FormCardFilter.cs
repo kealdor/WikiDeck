@@ -39,7 +39,7 @@ namespace WikiDeck
             if (Owner == null)
                 return;
             Point startLocation = Owner.Location;
-            startLocation.Offset(-Width, 70);
+            startLocation.Offset(-Width, 48);
             if (startLocation.X < 0)
                 startLocation.X = 0;
             Location = startLocation;
