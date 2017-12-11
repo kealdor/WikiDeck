@@ -83,6 +83,9 @@ namespace WikiDeck
 
         public int MaxInHandFromRarity => rarityToMaxInHandMap[Rarity];
 
+        [JsonIgnore]
+        public Card OtherCard { get; set; }
+
         public int MaxInHand
         {
             get
@@ -111,5 +114,7 @@ namespace WikiDeck
                 return 4;
             }
         }
+
+
     }
 }

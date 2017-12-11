@@ -12,9 +12,28 @@ namespace WikiDeck
     {
         public static void Load(this List<Card> cards, string fileName)
         {
+            List<Card> loadedCards = GetCardData(fileName);
+            NormalizeOtherCards(loadedCards);
+            cards.AddRange(loadedCards);
+        }
+
+        private static void NormalizeOtherCards(List<Card> cards)
+        {
+            List<Card> twoFacedCards = cards.Where(x => x.CardNumber.EndsWith("a")).ToList();
+            foreach (Card card in twoFacedCards)
+            {
+                string otherCardNumber = card.CardNumber.Substring(0, card.CardNumber.Length - 1) + "b";
+                Card otherCard = cards.Where(x => x.CardNumber == otherCardNumber).Single();
+                card.OtherCard = otherCard;
+                cards.Remove(otherCard);
+            }
+        }
+
+        private static List<Card> GetCardData(string fileName)
+        {
             string json = File.ReadAllText(fileName);
             List<Card> loadedCards = JsonConvert.DeserializeObject<List<Card>>(json);
-            cards.AddRange(loadedCards);
+            return loadedCards;
         }
 
         public static List<Card> FuzzyMatch(this IEnumerable<Card> cards, string match)

@@ -16131,7 +16131,7 @@
             "Sorcery"
         ],
         "Manacost": "{{2}}{{B}}",
-        "CardNumber": "215b",
+        "CardNumber": "9991b",
         "Name": "Finish",
         "cmc": 3,
         "Rarity": "Uncommon",
@@ -21274,7 +21274,7 @@
             "Hinterland Logger",
             "Timber Shredder"
         ],
-        "CardNumber": "210a",
+        "CardNumber": "999a",
         "Artist": "Karl Kopinski",
         "Colors": [
             "Green"
@@ -39977,7 +39977,7 @@
             "Instant"
         ],
         "Manacost": "{{2}}{{W}}",
-        "CardNumber": "215a",
+        "CardNumber": "9991a",
         "Name": "Start",
         "cmc": 3,
         "Rarity": "Uncommon",
@@ -42870,7 +42870,7 @@
             "Hinterland Logger",
             "Timber Shredder"
         ],
-        "CardNumber": "210b",
+        "CardNumber": "999b",
         "Colors": [
             "Green"
         ],
