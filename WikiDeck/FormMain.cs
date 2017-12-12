@@ -342,6 +342,10 @@ namespace WikiDeck
                 _colorLegend.FormClosed += ColorLegend_FormClosed;
                 _colorLegend.Show(this);
             }
+            else
+            {
+                _colorLegend.Close();
+            }
         }
 
         private void ColorLegend_FormClosed(object sender, FormClosedEventArgs e)
@@ -356,11 +360,12 @@ namespace WikiDeck
                 _cardFilter = new FormCardFilter(_cards, _sets);
                 _cardFilter.FormClosed += CardFilter_FormClosed;
                 _cardFilter.FilterChanged += CardFilter_FilterChanged;
+                SetFilterButtonText();
                 _cardFilter.Show(this);
             }
             else
             {
-                _cardFilter.Activate();
+                _cardFilter.Close();
             }
         }
 
@@ -374,6 +379,7 @@ namespace WikiDeck
         {
             _cardFilter = null;
             _filteredCards = _cards;
+            SetFilterButtonText();
             UpdateCardList();
         }
 
@@ -389,7 +395,7 @@ namespace WikiDeck
             }
             else
             {
-                _cardView.Activate();
+                _cardView.Close();
             }
         }
 
@@ -402,6 +408,11 @@ namespace WikiDeck
         {
             if (_cardView != null && listBoxCardList.SelectedItem != null)
                 _cardView.Card = (Card)listBoxCardList.SelectedItem;
+        }
+
+        private void SetFilterButtonText()
+        {
+            buttonFilter.Text = _cardFilter == null ? "More" : "Less";
         }
     }
 }
