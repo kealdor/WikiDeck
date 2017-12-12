@@ -37,7 +37,10 @@ namespace WikiDeck
             labelCardText.Text = AdjustText(_card.Text);
             labelFlavorText.Text = AdjustText(_card.FlavorText);
             labelType.Text = _card.Type;
-            labelPower.Text = PowerToughnessText(_card.Power, _card.Toughness, _card.Loyalty);
+            if (_card.Type.Contains("Planeswalker"))
+                labelPower.Text = LoyaltyText(_card.Loyalty);
+            else
+                labelPower.Text = PowerToughnessText(_card.Power, _card.Toughness);
             CreateCostImages(_card.Manacost);
 
             if (_card.OtherCard != null)
@@ -128,10 +131,13 @@ namespace WikiDeck
             }
         }
 
-        private string PowerToughnessText(string power, string toughness, int? loyalty)
+        private string LoyaltyText(int? loyalty)
         {
-            if (loyalty.HasValue)
-                return loyalty.Value.ToString();
+            return "Loyalty " + (loyalty.HasValue ? loyalty.Value.ToString() : "X");
+        }
+
+        private string PowerToughnessText(string power, string toughness)
+        {
             if (string.IsNullOrEmpty(power))
                 return "";
             return power + "/" + toughness;
