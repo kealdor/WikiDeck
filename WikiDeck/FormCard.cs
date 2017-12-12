@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -9,6 +10,8 @@ namespace WikiDeck
     {
         private Regex _manaRegex = new Regex(@"{{(\d+|[RGBUWCX])}}");
         private Card _card;
+        private FormCard _otherCardView;
+        private Point _otherCardViewLocation = new Point(int.MinValue, int.MinValue);
 
         public FormCard()
         {
@@ -36,6 +39,59 @@ namespace WikiDeck
             labelType.Text = _card.Type;
             labelPower.Text = PowerToughnessText(_card.Power, _card.Toughness, _card.Loyalty);
             CreateCostImages(_card.Manacost);
+
+            if (_card.OtherCard != null)
+            {
+                if (Visible)
+                    ShowOtherCard(_card.OtherCard);
+            }
+            else
+            {
+                if (_otherCardView != null)
+                {
+                    _otherCardView.Close();
+                    _otherCardView = null;
+                }
+            }
+        }
+
+        private void ShowOtherCard(Card otherCard)
+        {
+            if (_otherCardView != null)
+            {
+                _otherCardView.Card = otherCard;
+                return;
+            }
+            _otherCardView = new FormCard();
+            _otherCardView.FormClosed += OtherCardView_FormClosed;
+            _otherCardView.Card = otherCard;
+            _otherCardView.StartPosition = FormStartPosition.Manual;
+            _otherCardView.Text = _otherCardView.Text + " (other card)";
+            _otherCardView.Move += OtherCardView_Move;
+            if (_otherCardViewLocation.X != int.MinValue)
+            {
+                _otherCardView.Location = _otherCardViewLocation;
+            }
+            else
+            {
+                Point location = Location;
+                location.Offset(0, Height);
+                Screen screen = Screen.FromControl(this);
+                if (location.Y > screen.WorkingArea.Height - 100)
+                    location.Y = screen.WorkingArea.Height - 100;
+                _otherCardView.Location = location;
+            }
+            _otherCardView.Show(this);
+        }
+
+        private void OtherCardView_Move(object sender, EventArgs e)
+        {
+            _otherCardViewLocation = _otherCardView.Location;
+        }
+
+        private void OtherCardView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _otherCardView = null;
         }
 
         private void CreateCostImages(string manacost)
@@ -90,6 +146,14 @@ namespace WikiDeck
             sb.Replace("{{", "{");
             sb.Replace("}}", "}");
             return sb.ToString();
+        }
+
+        private void FormCard_Shown(object sender, EventArgs e)
+        {
+            if (_card.OtherCard != null)
+            {
+                ShowOtherCard(_card.OtherCard);
+            }
         }
     }
 }

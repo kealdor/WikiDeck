@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WikiDeck
 {
@@ -39,7 +37,7 @@ namespace WikiDeck
         public static List<Card> FuzzyMatch(this IEnumerable<Card> cards, string match)
         {
             char[] chars = match.ToCharArray();
-            var results = cards.Where(x => Fuzzy(x.LowerCaseName, chars)).OrderBy(x => Weight(x.LowerCaseName, match));
+            IEnumerable<Card> results = cards.Where(x => Fuzzy(x.LowerCaseName, chars)).OrderBy(x => Weight(x.LowerCaseName, match));
             return results.ToList();
         }
 

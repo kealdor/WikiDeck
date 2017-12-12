@@ -76,7 +76,7 @@
             this.flowLayoutPanel1.Controls.Add(this.labelFlavorText);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(11, 84);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(263, 210);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(263, 172);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
             // labelType
@@ -110,7 +110,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(290, 308);
+            this.ClientSize = new System.Drawing.Size(290, 264);
             this.Controls.Add(this.flowLayoutPanelManaCost);
             this.Controls.Add(this.labelPower);
             this.Controls.Add(this.labelType);
@@ -121,6 +121,7 @@
             this.MinimizeBox = false;
             this.Name = "FormCard";
             this.Text = "Card Details";
+            this.Shown += new System.EventHandler(this.FormCard_Shown);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

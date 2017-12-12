@@ -40,5 +40,5 @@ using System.Runtime.InteropServices;
 //      Patch
 //      Not used
 //      
-[assembly: AssemblyVersion("1.5.0.0")]     // alpha
+[assembly: AssemblyVersion("1.6.0.0")]     // alpha
 [assembly: AssemblyFileVersion("1.0.0.0")]
