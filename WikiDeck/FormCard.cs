@@ -51,10 +51,7 @@ namespace WikiDeck
             else
             {
                 if (_otherCardView != null)
-                {
                     _otherCardView.Close();
-                    _otherCardView = null;
-                }
             }
         }
 
