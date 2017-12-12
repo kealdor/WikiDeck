@@ -85,6 +85,8 @@ namespace WikiDeck
             string[] cardLines = richTextBoxDeck.Text.Split(sep, StringSplitOptions.RemoveEmptyEntries);
             richTextBoxDeck.Text = "";
             Regex cardEntry = new Regex(@"^(\d+)\s*x?\s+(.+)$");
+            List<Card> processedCards = new List<Card>();
+            List<String> processedUnknowns = new List<string>();
             foreach (string line in cardLines)
             {
                 string trimmedLine = line.Trim();
@@ -112,19 +114,33 @@ namespace WikiDeck
                 Card card = _cards.GetByName(match.Groups[2].Value);
                 if (card == null)
                 {
-                    richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.UnknownCard].Color);
-                    richTextBoxDeck.AppendText("\n");
-                    result |= ValidateDeckResult.UnknownCard;
-                    continue;
+                    string lowerCaseName = match.Groups[2].Value.ToLowerInvariant();
+                    if (processedUnknowns.Contains(lowerCaseName))
+                    {
+
+                        richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.ContainsDuplicates].Color);
+                        richTextBoxDeck.AppendText("\n");
+                        result |= ValidateDeckResult.ContainsDuplicates;
+                        continue;
+                    }
+                    else
+                    {
+                        processedUnknowns.Add(lowerCaseName);
+                        richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.UnknownCard].Color);
+                        richTextBoxDeck.AppendText("\n");
+                        result |= ValidateDeckResult.UnknownCard;
+                        continue;
+                    }
                 }
 
-                if (richTextBoxDeck.Text.IndexOf(card.Name, StringComparison.InvariantCultureIgnoreCase) != -1)
+                if (processedCards.Contains(card))
                 {
                     richTextBoxDeck.AppendText(trimmedLine, validationColors[ValidateDeckResult.ContainsDuplicates].Color);
                     richTextBoxDeck.AppendText("\n");
                     result |= ValidateDeckResult.ContainsDuplicates;
                     continue;
                 }
+                processedCards.Add(card);
 
                 if (amount > (_useRarityForMaxInHand ? card.MaxInHandFromRarity : card.MaxInHand))
                 {
