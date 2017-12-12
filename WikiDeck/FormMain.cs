@@ -385,7 +385,7 @@ namespace WikiDeck
             }
         }
 
-        private void CardFilter_FilterChanged(object sender, FilterChangesEventArgs e)
+        private void CardFilter_FilterChanged(object sender, FilterChangedEventArgs e)
         {
             _filteredCards = e.Cards;
             UpdateCardList();

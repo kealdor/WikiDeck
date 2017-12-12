@@ -61,7 +61,7 @@
     <Compile Include="DecklistsEntry.cs" />
     <Compile Include="Decks.cs" />
     <Compile Include="Encryption.cs" />
-    <Compile Include="FilterChangesEventArgs.cs" />
+    <Compile Include="FilterChangedEventArgs.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,7 +119,6 @@
     <Compile Include="DecklistsException.cs" />
     <Compile Include="ManaImages.cs" />
     <Compile Include="MessageButtons.cs" />
-    <Compile Include="PredicateBuilder.cs" />
     <Compile Include="RarityInfo.cs" />
     <Compile Include="RichTextBoxExtensions.cs" />
     <Compile Include="FormMain.cs">

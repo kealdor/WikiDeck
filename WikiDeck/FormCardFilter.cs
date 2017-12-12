@@ -130,11 +130,11 @@ namespace WikiDeck
             return result;
         }
 
-        public event EventHandler<FilterChangesEventArgs> FilterChanged;
+        public event EventHandler<FilterChangedEventArgs> FilterChanged;
         protected virtual void OnFilterChanged(IEnumerable<Card> filteredCards)
         {
             var handler = FilterChanged;
-            handler?.Invoke(this, new FilterChangesEventArgs(filteredCards));
+            handler?.Invoke(this, new FilterChangedEventArgs(filteredCards));
         }
 
         private void checkBoxUseCmc_CheckStateChanged(object sender, EventArgs e)
