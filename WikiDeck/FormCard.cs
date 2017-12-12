@@ -37,7 +37,7 @@ namespace WikiDeck
             labelCardText.Text = AdjustText(_card.Text);
             labelFlavorText.Text = AdjustText(_card.FlavorText);
             labelType.Text = _card.Type;
-            if (_card.Type.Contains("Planeswalker"))
+            if (_card.Types.Contains("Planeswalker"))
                 labelPower.Text = LoyaltyText(_card.Loyalty);
             else
                 labelPower.Text = PowerToughnessText(_card.Power, _card.Toughness);
