@@ -16,6 +16,7 @@ namespace WikiDeck
         public FormCard()
         {
             InitializeComponent();
+            SetOtherCardText(null);
         }
 
         public Card Card
@@ -26,6 +27,7 @@ namespace WikiDeck
             }
             set
             {
+                SetOtherCardText(null);
                 _card = value;
                 UpdateDetails();
             }
@@ -45,13 +47,16 @@ namespace WikiDeck
 
             if (_card.OtherCard != null)
             {
+                SetOtherCardText(_card.OtherCard);
                 if (Visible)
                     ShowOtherCard(_card.OtherCard);
             }
             else
             {
                 if (_otherCardView != null)
+                {
                     _otherCardView.Close();
+                }
             }
         }
 
@@ -82,6 +87,35 @@ namespace WikiDeck
                 _otherCardView.Location = location;
             }
             _otherCardView.Show(this);
+        }
+
+        private void SetOtherCardText(Card otherCard)
+        {
+            string text;
+            if (otherCard == null)
+            {
+                text = "";
+            }
+            else if (_card.Text.IndexOf("transform", StringComparison.InvariantCultureIgnoreCase) != -1)
+            {
+                text = "This card can be transformed.";
+            }
+            else if (_card.Text.IndexOf("meld", StringComparison.InvariantCultureIgnoreCase) != -1)
+            {
+                text = "This card can be melded.";
+            }
+            else if (otherCard.Text.IndexOf("aftermath", StringComparison.InvariantCultureIgnoreCase) != -1)
+            {
+                text = "This card has an Aftermath.";
+            }
+            else
+            {
+                // TODO: proper exception
+                throw new Exception("Two faced card with unknown mechanic " + _card.Name);
+            }
+            if (text != "")
+                text += " See other card window.";
+            labelOtherCard.Text = text;
         }
 
         private void OtherCardView_Move(object sender, EventArgs e)

@@ -35,6 +35,7 @@
             this.labelType = new System.Windows.Forms.Label();
             this.labelPower = new System.Windows.Forms.Label();
             this.flowLayoutPanelManaCost = new System.Windows.Forms.FlowLayoutPanel();
+            this.labelOtherCard = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +77,7 @@
             this.flowLayoutPanel1.Controls.Add(this.labelFlavorText);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(11, 84);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(263, 172);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(263, 157);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
             // labelType
@@ -106,11 +107,22 @@
             this.flowLayoutPanelManaCost.Size = new System.Drawing.Size(123, 21);
             this.flowLayoutPanelManaCost.TabIndex = 7;
             // 
+            // labelOtherCard
+            // 
+            this.labelOtherCard.AutoSize = true;
+            this.labelOtherCard.ForeColor = System.Drawing.Color.Blue;
+            this.labelOtherCard.Location = new System.Drawing.Point(12, 244);
+            this.labelOtherCard.Name = "labelOtherCard";
+            this.labelOtherCard.Size = new System.Drawing.Size(57, 13);
+            this.labelOtherCard.TabIndex = 8;
+            this.labelOtherCard.Text = "Other card";
+            // 
             // FormCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(290, 264);
+            this.Controls.Add(this.labelOtherCard);
             this.Controls.Add(this.flowLayoutPanelManaCost);
             this.Controls.Add(this.labelPower);
             this.Controls.Add(this.labelType);
@@ -138,5 +150,6 @@
         private System.Windows.Forms.Label labelType;
         private System.Windows.Forms.Label labelPower;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelManaCost;
+        private System.Windows.Forms.Label labelOtherCard;
     }
 }
