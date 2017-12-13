@@ -235,11 +235,14 @@ namespace WikiDeck
 
         private void UpdateCardList()
         {
-            string text = textBoxSearch.Text;
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(textBoxSearch.Text))
+            {
                 listBoxCardList.DataSource = _filteredCards.ToList();
+            }
             else
-                listBoxCardList.DataSource = _filteredCards.FuzzyMatch(text);
+            {
+                listBoxCardList.DataSource = _filteredCards.FuzzyMatch(textBoxSearch.Text.ToLowerInvariant());
+            }
         }
 
         private void listBoxCardList_MouseDoubleClick(object sender, MouseEventArgs e)
