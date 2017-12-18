@@ -46,13 +46,13 @@
             this.checkBoxSorcery = new System.Windows.Forms.CheckBox();
             this.checkBoxInstant = new System.Windows.Forms.CheckBox();
             this.checkBoxArtifact = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnchantment = new System.Windows.Forms.CheckBox();
+            this.checkBoxPlaneswalker = new System.Windows.Forms.CheckBox();
             this.groupBoxCmc = new System.Windows.Forms.GroupBox();
             this.numericUpDownCmcMax = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownCmcMin = new System.Windows.Forms.NumericUpDown();
             this.checkBoxUseCmc = new System.Windows.Forms.CheckBox();
             this.listBoxSets = new System.Windows.Forms.ListBox();
-            this.checkBoxEnchantment = new System.Windows.Forms.CheckBox();
-            this.checkBoxPlaneswalker = new System.Windows.Forms.CheckBox();
             groupBoxColors = new System.Windows.Forms.GroupBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -84,18 +84,19 @@
             this.flowLayoutPanelColors.Controls.Add(this.checkBoxGreen);
             this.flowLayoutPanelColors.Controls.Add(this.checkBoxRed);
             this.flowLayoutPanelColors.Controls.Add(this.checkBoxColorless);
-            this.flowLayoutPanelColors.Location = new System.Drawing.Point(6, 16);
+            this.flowLayoutPanelColors.Location = new System.Drawing.Point(0, 16);
             this.flowLayoutPanelColors.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.flowLayoutPanelColors.Name = "flowLayoutPanelColors";
-            this.flowLayoutPanelColors.Size = new System.Drawing.Size(48, 172);
+            this.flowLayoutPanelColors.Size = new System.Drawing.Size(52, 188);
             this.flowLayoutPanelColors.TabIndex = 2;
             // 
             // checkBoxBlack
             // 
             this.checkBoxBlack.Image = global::WikiDeck.Properties.Resources.Color_B;
-            this.checkBoxBlack.Location = new System.Drawing.Point(3, 3);
+            this.checkBoxBlack.Location = new System.Drawing.Point(3, 0);
+            this.checkBoxBlack.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxBlack.Name = "checkBoxBlack";
-            this.checkBoxBlack.Size = new System.Drawing.Size(41, 22);
+            this.checkBoxBlack.Size = new System.Drawing.Size(41, 26);
             this.checkBoxBlack.TabIndex = 2;
             this.checkBoxBlack.Tag = "Black";
             this.checkBoxBlack.UseVisualStyleBackColor = true;
@@ -103,9 +104,10 @@
             // checkBoxBlue
             // 
             this.checkBoxBlue.Image = global::WikiDeck.Properties.Resources.Color_U;
-            this.checkBoxBlue.Location = new System.Drawing.Point(3, 31);
+            this.checkBoxBlue.Location = new System.Drawing.Point(3, 26);
+            this.checkBoxBlue.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxBlue.Name = "checkBoxBlue";
-            this.checkBoxBlue.Size = new System.Drawing.Size(41, 22);
+            this.checkBoxBlue.Size = new System.Drawing.Size(41, 26);
             this.checkBoxBlue.TabIndex = 0;
             this.checkBoxBlue.Tag = "Blue";
             this.checkBoxBlue.UseVisualStyleBackColor = true;
@@ -113,9 +115,10 @@
             // checkBoxWhite
             // 
             this.checkBoxWhite.Image = global::WikiDeck.Properties.Resources.Color_W;
-            this.checkBoxWhite.Location = new System.Drawing.Point(3, 59);
+            this.checkBoxWhite.Location = new System.Drawing.Point(3, 52);
+            this.checkBoxWhite.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxWhite.Name = "checkBoxWhite";
-            this.checkBoxWhite.Size = new System.Drawing.Size(41, 22);
+            this.checkBoxWhite.Size = new System.Drawing.Size(41, 26);
             this.checkBoxWhite.TabIndex = 1;
             this.checkBoxWhite.Tag = "White";
             this.checkBoxWhite.UseVisualStyleBackColor = true;
@@ -123,9 +126,10 @@
             // checkBoxGreen
             // 
             this.checkBoxGreen.Image = global::WikiDeck.Properties.Resources.Color_G;
-            this.checkBoxGreen.Location = new System.Drawing.Point(3, 87);
+            this.checkBoxGreen.Location = new System.Drawing.Point(3, 78);
+            this.checkBoxGreen.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxGreen.Name = "checkBoxGreen";
-            this.checkBoxGreen.Size = new System.Drawing.Size(41, 22);
+            this.checkBoxGreen.Size = new System.Drawing.Size(41, 26);
             this.checkBoxGreen.TabIndex = 3;
             this.checkBoxGreen.Tag = "Green";
             this.checkBoxGreen.UseVisualStyleBackColor = true;
@@ -133,9 +137,10 @@
             // checkBoxRed
             // 
             this.checkBoxRed.Image = global::WikiDeck.Properties.Resources.Color_R;
-            this.checkBoxRed.Location = new System.Drawing.Point(3, 115);
+            this.checkBoxRed.Location = new System.Drawing.Point(3, 104);
+            this.checkBoxRed.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxRed.Name = "checkBoxRed";
-            this.checkBoxRed.Size = new System.Drawing.Size(41, 22);
+            this.checkBoxRed.Size = new System.Drawing.Size(41, 26);
             this.checkBoxRed.TabIndex = 4;
             this.checkBoxRed.Tag = "Red";
             this.checkBoxRed.UseVisualStyleBackColor = true;
@@ -143,9 +148,10 @@
             // checkBoxColorless
             // 
             this.checkBoxColorless.Image = global::WikiDeck.Properties.Resources.Mana_C;
-            this.checkBoxColorless.Location = new System.Drawing.Point(3, 143);
+            this.checkBoxColorless.Location = new System.Drawing.Point(3, 130);
+            this.checkBoxColorless.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxColorless.Name = "checkBoxColorless";
-            this.checkBoxColorless.Size = new System.Drawing.Size(41, 22);
+            this.checkBoxColorless.Size = new System.Drawing.Size(41, 26);
             this.checkBoxColorless.TabIndex = 5;
             this.checkBoxColorless.UseVisualStyleBackColor = true;
             // 
@@ -199,15 +205,16 @@
             this.flowLayoutPanelTypes.Controls.Add(this.checkBoxPlaneswalker);
             this.flowLayoutPanelTypes.Location = new System.Drawing.Point(7, 16);
             this.flowLayoutPanelTypes.Name = "flowLayoutPanelTypes";
-            this.flowLayoutPanelTypes.Size = new System.Drawing.Size(95, 191);
+            this.flowLayoutPanelTypes.Size = new System.Drawing.Size(95, 188);
             this.flowLayoutPanelTypes.TabIndex = 0;
             this.flowLayoutPanelTypes.Tag = "Land";
             // 
             // checkBoxLand
             // 
-            this.checkBoxLand.Location = new System.Drawing.Point(3, 3);
+            this.checkBoxLand.Location = new System.Drawing.Point(3, 0);
+            this.checkBoxLand.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxLand.Name = "checkBoxLand";
-            this.checkBoxLand.Size = new System.Drawing.Size(50, 22);
+            this.checkBoxLand.Size = new System.Drawing.Size(168, 26);
             this.checkBoxLand.TabIndex = 0;
             this.checkBoxLand.Tag = "Land";
             this.checkBoxLand.Text = "Land";
@@ -215,9 +222,10 @@
             // 
             // checkBoxCreature
             // 
-            this.checkBoxCreature.Location = new System.Drawing.Point(3, 31);
+            this.checkBoxCreature.Location = new System.Drawing.Point(3, 26);
+            this.checkBoxCreature.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxCreature.Name = "checkBoxCreature";
-            this.checkBoxCreature.Size = new System.Drawing.Size(66, 22);
+            this.checkBoxCreature.Size = new System.Drawing.Size(168, 26);
             this.checkBoxCreature.TabIndex = 1;
             this.checkBoxCreature.Tag = "Creature";
             this.checkBoxCreature.Text = "Creature";
@@ -225,9 +233,10 @@
             // 
             // checkBoxSorcery
             // 
-            this.checkBoxSorcery.Location = new System.Drawing.Point(3, 59);
+            this.checkBoxSorcery.Location = new System.Drawing.Point(3, 52);
+            this.checkBoxSorcery.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxSorcery.Name = "checkBoxSorcery";
-            this.checkBoxSorcery.Size = new System.Drawing.Size(62, 22);
+            this.checkBoxSorcery.Size = new System.Drawing.Size(168, 26);
             this.checkBoxSorcery.TabIndex = 2;
             this.checkBoxSorcery.Tag = "Sorcery";
             this.checkBoxSorcery.Text = "Sorcery";
@@ -235,9 +244,10 @@
             // 
             // checkBoxInstant
             // 
-            this.checkBoxInstant.Location = new System.Drawing.Point(3, 87);
+            this.checkBoxInstant.Location = new System.Drawing.Point(3, 78);
+            this.checkBoxInstant.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxInstant.Name = "checkBoxInstant";
-            this.checkBoxInstant.Size = new System.Drawing.Size(58, 22);
+            this.checkBoxInstant.Size = new System.Drawing.Size(168, 26);
             this.checkBoxInstant.TabIndex = 3;
             this.checkBoxInstant.Tag = "Instant";
             this.checkBoxInstant.Text = "Instant";
@@ -245,13 +255,36 @@
             // 
             // checkBoxArtifact
             // 
-            this.checkBoxArtifact.Location = new System.Drawing.Point(3, 115);
+            this.checkBoxArtifact.Location = new System.Drawing.Point(3, 104);
+            this.checkBoxArtifact.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.checkBoxArtifact.Name = "checkBoxArtifact";
-            this.checkBoxArtifact.Size = new System.Drawing.Size(59, 22);
+            this.checkBoxArtifact.Size = new System.Drawing.Size(168, 26);
             this.checkBoxArtifact.TabIndex = 4;
             this.checkBoxArtifact.Tag = "Artifact";
             this.checkBoxArtifact.Text = "Artifact";
             this.checkBoxArtifact.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxEnchantment
+            // 
+            this.checkBoxEnchantment.Location = new System.Drawing.Point(3, 130);
+            this.checkBoxEnchantment.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.checkBoxEnchantment.Name = "checkBoxEnchantment";
+            this.checkBoxEnchantment.Size = new System.Drawing.Size(168, 26);
+            this.checkBoxEnchantment.TabIndex = 5;
+            this.checkBoxEnchantment.Tag = "Enchantment";
+            this.checkBoxEnchantment.Text = "Enchantment";
+            this.checkBoxEnchantment.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPlaneswalker
+            // 
+            this.checkBoxPlaneswalker.Location = new System.Drawing.Point(3, 156);
+            this.checkBoxPlaneswalker.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.checkBoxPlaneswalker.Name = "checkBoxPlaneswalker";
+            this.checkBoxPlaneswalker.Size = new System.Drawing.Size(168, 26);
+            this.checkBoxPlaneswalker.TabIndex = 6;
+            this.checkBoxPlaneswalker.Tag = "Planeswalker";
+            this.checkBoxPlaneswalker.Text = "Planeswalker";
+            this.checkBoxPlaneswalker.UseVisualStyleBackColor = true;
             // 
             // groupBoxCmc
             // 
@@ -304,26 +337,6 @@
             this.listBoxSets.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxSets.Size = new System.Drawing.Size(168, 121);
             this.listBoxSets.TabIndex = 4;
-            // 
-            // checkBoxEnchantment
-            // 
-            this.checkBoxEnchantment.Location = new System.Drawing.Point(3, 143);
-            this.checkBoxEnchantment.Name = "checkBoxEnchantment";
-            this.checkBoxEnchantment.Size = new System.Drawing.Size(92, 22);
-            this.checkBoxEnchantment.TabIndex = 5;
-            this.checkBoxEnchantment.Tag = "Enchantment";
-            this.checkBoxEnchantment.Text = "Enchantment";
-            this.checkBoxEnchantment.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxPlaneswalker
-            // 
-            this.checkBoxPlaneswalker.Location = new System.Drawing.Point(3, 171);
-            this.checkBoxPlaneswalker.Name = "checkBoxPlaneswalker";
-            this.checkBoxPlaneswalker.Size = new System.Drawing.Size(92, 22);
-            this.checkBoxPlaneswalker.TabIndex = 6;
-            this.checkBoxPlaneswalker.Tag = "Planeswalker";
-            this.checkBoxPlaneswalker.Text = "Planeswalker";
-            this.checkBoxPlaneswalker.UseVisualStyleBackColor = true;
             // 
             // FormCardFilter
             // 
